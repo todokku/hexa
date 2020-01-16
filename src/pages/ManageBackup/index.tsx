@@ -389,8 +389,8 @@ export default function ManageBackup(props) {
                 );
                 AsyncStorage.setItem('dummyHealth', JSON.stringify(80));
               });
-            }, 10000);
-          }, 10000);
+            }, 20000);
+          }, 20000);
           CommunicationModeBottomSheet.current.snapTo(0);
           shareOtpWithTrustedContactBottomSheet.current.snapTo(1);
         }}

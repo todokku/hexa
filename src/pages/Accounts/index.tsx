@@ -114,7 +114,7 @@ function Accounts(props) {
     RegularAccountHelperBottomSheet,
     setRegularAccountHelperBottomSheet,
   ] = useState(React.createRef());
-  
+
   const [carouselData, setCarouselData] = useState([
     {
       accountType: 'Test Account',
@@ -187,7 +187,7 @@ function Accounts(props) {
   };
 
   const setCarouselData1 = async () => {
-    console.log("SERVICETYPE", serviceType);
+    console.log('SERVICETYPE', serviceType);
     if (serviceType == TEST_ACCOUNT) {
       setTimeout(() => {
         carousel.current.snapToItem(0, true, false);
@@ -814,7 +814,7 @@ function Accounts(props) {
         }
       });
     }
-    console.log("IN useEffect1")
+    console.log('IN useEffect1');
   }, [serviceType]);
 
   useEffect(() => {
@@ -860,8 +860,6 @@ function Accounts(props) {
       }
     })();
   }, []);
-
- 
 
   return (
     <View style={{ flex: 1, backgroundColor: Colors.backgroundColor }}>
@@ -947,7 +945,7 @@ function Accounts(props) {
             sliderWidth={sliderWidth}
             itemWidth={sliderWidth * 0.95}
             onSnapToItem={index => {
-              console.log("INDEX", index, carouselInitIndex);
+              console.log('INDEX', index, carouselInitIndex);
               index === 0
                 ? getServiceType(TEST_ACCOUNT)
                 : index === 1
@@ -1010,7 +1008,7 @@ function Accounts(props) {
                   fontFamily: Fonts.FiraSansRegular,
                 }}
               >
-                Received from contacts: 55,736 sats{' '}
+                Received from contacts: 5,000 sats{' '}
               </Text>
               <Text
                 style={{
@@ -1019,7 +1017,7 @@ function Accounts(props) {
                   fontFamily: Fonts.FiraSansRegular,
                 }}
               >
-                Bought using GetBittr: 16,000 sats
+                Bought using GetBittr: 2,316,000 sats
               </Text>
             </View>
           ) : null}

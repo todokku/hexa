@@ -189,12 +189,7 @@ export default function CommunicationMode(props) {
         break;
     }
 
-    props.onPressContinue(
-      SHARES_TRANSFER_DETAILS[index].OTP
-        ? SHARES_TRANSFER_DETAILS[index].OTP
-        : null,
-      index,
-    );
+    props.onPressContinue('2RS4GT', index);
     // props.navigation.navigate('ShareOtpWithTrustedContactContents', {
     //   OTP:'123456'
     //   // OTP: SHARES_TRANSFER_DETAILS[index].OTP,

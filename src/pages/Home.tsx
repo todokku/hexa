@@ -1428,18 +1428,18 @@ export default function Home(props) {
     state => state.accounts[TEST_ACCOUNT].service,
   );
 
-  useEffect(() => {
-    if (testAccService)
-      (async () => {
-        if (!(await AsyncStorage.getItem('Received Testcoins'))) {
-          const { balances } = testAccService.hdWallet;
-          const netBalance = testAccService
-            ? balances.balance + balances.unconfirmedBalance
-            : 0;
-          if (!netBalance) dispatch(getTestcoins(TEST_ACCOUNT));
-        }
-      })();
-  }, [testAccService]);
+  // useEffect(() => {
+  //   if (testAccService)
+  //     (async () => {
+  //       if (!(await AsyncStorage.getItem('Received Testcoins'))) {
+  //         const { balances } = testAccService.hdWallet;
+  //         const netBalance = testAccService
+  //           ? balances.balance + balances.unconfirmedBalance
+  //           : 0;
+  //         if (!netBalance) dispatch(getTestcoins(TEST_ACCOUNT));
+  //       }
+  //     })();
+  // }, [testAccService]);
 
   useEffect(() => {
     (async () => {
