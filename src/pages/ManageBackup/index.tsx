@@ -349,7 +349,25 @@ export default function ManageBackup(props) {
               JSON.stringify(updatedPageData),
             );
             AsyncStorage.setItem('dummyHealth', JSON.stringify(100));
-          }, 20000);
+
+            setTimeout(() => {
+              const furtherUpdate = [...updatedPageData];
+              furtherUpdate.forEach(data => {
+                switch (data.title) {
+                  case 'Personal Copy 1':
+                    data.status = 'warning';
+                    break;
+                }
+                setPageData([...furtherUpdate]);
+                setDummyHealth(80);
+                AsyncStorage.setItem(
+                  'dummyPageData',
+                  JSON.stringify(updatedPageData),
+                );
+                AsyncStorage.setItem('dummyHealth', JSON.stringify(80));
+              });
+            }, 10000);
+          }, 10000);
           CommunicationModeBottomSheet.current.snapTo(0);
           shareOtpWithTrustedContactBottomSheet.current.snapTo(1);
         }}
@@ -361,7 +379,6 @@ export default function ManageBackup(props) {
     (async () => {
       const updatedPageData = await AsyncStorage.getItem('dummyPageData');
       if (updatedPageData) {
-        console.log(JSON.parse(updatedPageData));
         setPageData(JSON.parse(updatedPageData));
       }
       const dummyHealth = await AsyncStorage.getItem('dummyHealth');
@@ -1005,12 +1022,28 @@ export default function ManageBackup(props) {
               <Text style={{ ...CommonStyles.headerTitles, marginLeft: 25 }}>
                 Manage Backup
               </Text>
-              <Text
-                style={{ ...CommonStyles.headerTitlesInfoText, marginLeft: 25 }}
-              >
-                The wallet backup is not secured. Please complete the setup to
-                safeguard against loss of funds
-              </Text>
+              {dummyHealth !== 100 ? (
+                <Text
+                  style={{
+                    ...CommonStyles.headerTitlesInfoText,
+                    marginLeft: 25,
+                  }}
+                >
+                  The wallet backup is not secured. Please complete the setup to
+                  safeguard against loss of funds
+                </Text>
+              ) : (
+                <Text
+                  style={{
+                    ...CommonStyles.headerTitlesInfoText,
+                    marginLeft: 25,
+                  }}
+                >
+                  <Text style={{ fontStyle: 'italic' }}>Great!! </Text>The
+                  wallet backup is{'\n'}secure. Keep an eye on the{'\n'}health
+                  of the backup here
+                </Text>
+              )}
               <KnowMoreButton
                 onpress={() => {
                   WalletBackupAndRecoveryBottomSheet.current.snapTo(1);
@@ -1036,7 +1069,7 @@ export default function ManageBackup(props) {
                 <HomePageShield
                   circleShadowColor={Colors.borderColor}
                   shieldImage={require('../../assets/images/icons/protector_gray.png')}
-                  shieldStatus={0}
+                  shieldStatus={dummyHealth}
                 />
               )}
             </View>
@@ -1071,6 +1104,35 @@ export default function ManageBackup(props) {
                         }, 10);
                       }
                       trustedContactsBottomSheet.current.snapTo(1);
+                    }
+
+                    if (item.type == 'copy1') {
+                      props.navigation.navigate('QrScanner', {
+                        scanedCode: qrData => {
+                          setTimeout(() => {
+                            const updatedPageData = [...pageData];
+                            updatedPageData.forEach(data => {
+                              switch (data.title) {
+                                case 'Personal Copy 1':
+                                  data.status = 'success';
+                                  data.time = 'a minute ago';
+                                  break;
+                              }
+                              setPageData([...updatedPageData]);
+                              setDummyHealth(100);
+                              AsyncStorage.setItem(
+                                'dummyPageData',
+                                JSON.stringify(updatedPageData),
+                              );
+                              AsyncStorage.setItem(
+                                'dummyHealth',
+                                JSON.stringify(100),
+                              );
+                            });
+                          }, 2000);
+                        },
+                        title: 'Confirm your Recovery Secret',
+                      });
                     }
                     // let singleton = Singleton.getInstance();
                     // singleton.setSelectedPdfDetails(pageData);
