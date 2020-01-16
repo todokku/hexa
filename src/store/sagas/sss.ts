@@ -49,7 +49,9 @@ function* generateMetaSharesWorker() {
   );
 
   const secondaryMnemonic = secureAccount.secureHDWallet.secondaryMnemonic;
-  const twoFASecret = secureAccount.secureHDWallet.twoFASetup.secret;
+  const twoFASecret = secureAccount.secureHDWallet.twoFASetup
+    ? secureAccount.secureHDWallet.twoFASetup.secret
+    : 'DemoSecret';
   const { secondary, bh } = secureAccount.secureHDWallet.xpubs;
 
   const secureAssets = {

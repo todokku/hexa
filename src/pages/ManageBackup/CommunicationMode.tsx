@@ -148,13 +148,18 @@ export default function CommunicationMode(props) {
   const { SHARES_TRANSFER_DETAILS } = DECENTRALIZED_BACKUP;
 
   const communicate = async selectedContactMode => {
-    if (!SHARES_TRANSFER_DETAILS[index]) {
-      Alert.alert('Failed to share');
-      return;
-    }
+    console.log({ index });
+
+    // if (!SHARES_TRANSFER_DETAILS[index]) {
+    //   Alert.alert('Failed to share');
+    //   return;
+    // }
+    // const deepLink =
+    //   `https://hexawallet.io/${WALLET_SETUP.walletName}/sss/ek/` +
+    //   SHARES_TRANSFER_DETAILS[index].ENCRYPTED_KEY;
+
     const deepLink =
-      `https://hexawallet.io/${WALLET_SETUP.walletName}/sss/ek/` +
-      SHARES_TRANSFER_DETAILS[index].ENCRYPTED_KEY;
+      'https://hexawallet.io/Hexa/sss/ek/1abfb00bd9f85c7437752b70501f2c36dcab83fc38744148fcaedd97939f4106';
 
     switch (selectedContactMode.type) {
       case 'number':

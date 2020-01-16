@@ -26,7 +26,11 @@ import { RFValue } from 'react-native-responsive-fontsize';
 import CopyThisText from '../../components/CopyThisText';
 import KnowMoreButton from '../../components/KnowMoreButton';
 import { useDispatch, useSelector } from 'react-redux';
-import { initHealthCheck, checkMSharesHealth } from '../../store/actions/sss';
+import {
+  initHealthCheck,
+  checkMSharesHealth,
+  uploadEncMShare,
+} from '../../store/actions/sss';
 import S3Service from '../../bitcoin/services/sss/S3Service';
 import HomePageShield from '../../components/HomePageShield';
 import BackupStyles from './Styles';
@@ -315,6 +319,25 @@ export default function ManageBackup(props) {
       setSelectedStatus('warning');
     }
   }
+
+  const { DECENTRALIZED_BACKUP, WALLET_SETUP } = useSelector(
+    state => state.storage.database,
+  );
+  const { SHARES_TRANSFER_DETAILS } = DECENTRALIZED_BACKUP;
+
+  // useEffect(() => {
+  //   console.log('EXECUTING');
+  //   if (
+  //     !SHARES_TRANSFER_DETAILS[1] ||
+  //     Date.now() - SHARES_TRANSFER_DETAILS[1].UPLOADED_AT > 600000
+  //   ) {
+  //     console.log('Dispatching');
+  //     dispatch(uploadEncMShare(1));
+  //   } else {
+  //     //  Alert.alert('OTP', SHARES_TRANSFER_DETAILS[index].OTP);
+  //     // console.log(SHARES_TRANSFER_DETAILS[index]);
+  //   }
+  // }, [SHARES_TRANSFER_DETAILS[1]]);
 
   function renderCommunicationModeModalContent() {
     return (
@@ -1108,31 +1131,30 @@ export default function ManageBackup(props) {
 
                     if (item.type == 'copy1') {
                       props.navigation.navigate('QrScanner', {
-                        scanedCode: qrData => {
-                          setTimeout(() => {
-                            const updatedPageData = [...pageData];
-                            updatedPageData.forEach(data => {
-                              switch (data.title) {
-                                case 'Personal Copy 1':
-                                  data.status = 'success';
-                                  data.time = 'a minute ago';
-                                  break;
-                              }
-                              setPageData([...updatedPageData]);
-                              setDummyHealth(100);
-                              AsyncStorage.setItem(
-                                'dummyPageData',
-                                JSON.stringify(updatedPageData),
-                              );
-                              AsyncStorage.setItem(
-                                'dummyHealth',
-                                JSON.stringify(100),
-                              );
-                            });
-                          }, 2000);
-                        },
+                        scanedCode: qrData => {},
                         title: 'Confirm your Recovery Secret',
                       });
+                      setTimeout(() => {
+                        const updatedPageData = [...pageData];
+                        updatedPageData.forEach(data => {
+                          switch (data.title) {
+                            case 'Personal Copy 1':
+                              data.status = 'success';
+                              data.time = 'a minute ago';
+                              break;
+                          }
+                          setPageData([...updatedPageData]);
+                          setDummyHealth(100);
+                          AsyncStorage.setItem(
+                            'dummyPageData',
+                            JSON.stringify(updatedPageData),
+                          );
+                          AsyncStorage.setItem(
+                            'dummyHealth',
+                            JSON.stringify(100),
+                          );
+                        });
+                      }, 2000);
                     }
                     // let singleton = Singleton.getInstance();
                     // singleton.setSelectedPdfDetails(pageData);
