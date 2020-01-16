@@ -54,7 +54,7 @@ export default function RestoreWalletBySecondaryDevice(props) {
       )
     : null;
 
-  REQUEST_DETAILS ? Alert.alert('OTP', REQUEST_DETAILS.OTP) : null;
+  // REQUEST_DETAILS ? Alert.alert('OTP', REQUEST_DETAILS.OTP) : null;
 
   const deepLink = REQUEST_DETAILS
     ? `https://hexawallet.io/${WALLET_SETUP.walletName}/sss/rk/` +

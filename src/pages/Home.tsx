@@ -1467,17 +1467,17 @@ export default function Home(props) {
     })();
   }, []);
 
-  // useEffect(() => {
-  //   (async () => {
-  //     if (!(await AsyncStorage.getItem('notFirstRun'))) {
-  //       dispatch(fetchBalance(REGULAR_ACCOUNT));
-  //       dispatch(fetchTransactions(REGULAR_ACCOUNT));
-  //       dispatch(fetchBalance(SECURE_ACCOUNT));
-  //       dispatch(fetchTransactions(SECURE_ACCOUNT));
-  //       await AsyncStorage.setItem('notFirstRun', 'true');
-  //     }
-  //   })();
-  // }, []);
+  useEffect(() => {
+    (async () => {
+      if (!(await AsyncStorage.getItem('notFirstRun'))) {
+        dispatch(fetchBalance(REGULAR_ACCOUNT));
+        dispatch(fetchTransactions(REGULAR_ACCOUNT));
+        dispatch(fetchBalance(SECURE_ACCOUNT));
+        dispatch(fetchTransactions(SECURE_ACCOUNT));
+        await AsyncStorage.setItem('notFirstRun', 'true');
+      }
+    })();
+  }, []);
 
   const renderRecoverySecretRequestModalContent = useCallback(() => {
     if (!recoveryRequest) return <View></View>;

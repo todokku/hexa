@@ -28,6 +28,7 @@ import { requestShare } from '../../store/actions/sss';
 export default function RecoveryCommunication(props) {
   const contact = props.navigation.getParam('contact');
   const index = props.navigation.getParam('index');
+  const onProceed = props.navigation.getParam('onProceed');
 
   const [selectedContactMode, setSelectedContactMode] = useState();
   const [contactInfo, setContactInfo] = useState(
@@ -81,7 +82,7 @@ export default function RecoveryCommunication(props) {
     if (!REQUEST_DETAILS) dispatch(requestShare(index));
   }, []);
 
-  REQUEST_DETAILS ? Alert.alert('OTP', REQUEST_DETAILS.OTP) : null;
+  // REQUEST_DETAILS ? Alert.alert('OTP', REQUEST_DETAILS.OTP) : null;
 
   const communicate = async selectedContactMode => {
     const deepLink =
@@ -103,6 +104,8 @@ export default function RecoveryCommunication(props) {
         );
         break;
     }
+
+    onProceed();
   };
 
   return (
@@ -189,7 +192,7 @@ export default function RecoveryCommunication(props) {
             <TouchableOpacity
               onPress={() => {
                 communicate(selectedContactMode);
-                setTimeout(() => props.navigation.goBack(), 5);
+                setTimeout(() => props.navigation.goBack(), 2000);
               }}
               disabled={!REQUEST_DETAILS}
               style={{
