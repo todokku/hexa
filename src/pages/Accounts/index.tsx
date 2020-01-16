@@ -674,7 +674,7 @@ function Accounts(props) {
   const renderBuyHelperHeader = () => {
     return (
       <SmallHeaderModal
-      borderColor={Colors.blue}
+        borderColor={Colors.blue}
         backgroundColor={Colors.blue}
         onPressHeader={() => {
           (BuyHelperBottomSheet as any).current.snapTo(0);
@@ -709,9 +709,9 @@ function Accounts(props) {
   const renderTestAccountsHelperHeader = () => {
     return (
       <SmallHeaderModal
-      borderColor={Colors.blue}
-      backgroundColor={Colors.blue}
-      onPressHeader={() => {
+        borderColor={Colors.blue}
+        backgroundColor={Colors.blue}
+        onPressHeader={() => {
           (TestAccountHelperBottomSheet as any).current.snapTo(0);
         }}
       />
@@ -743,9 +743,9 @@ function Accounts(props) {
   const renderSecureAccountsHelperHeader = useCallback(() => {
     return (
       <SmallHeaderModal
-      borderColor={Colors.blue}
-      backgroundColor={Colors.blue}
-      onPressHeader={() => {
+        borderColor={Colors.blue}
+        backgroundColor={Colors.blue}
+        onPressHeader={() => {
           (SecureAccountHelperBottomSheet as any).current.snapTo(0);
         }}
       />
@@ -777,9 +777,9 @@ function Accounts(props) {
   const renderRegularAccountsHelperHeader = useCallback(() => {
     return (
       <SmallHeaderModal
-      borderColor={Colors.blue}
-      backgroundColor={Colors.blue}
-      onPressHeader={() => {
+        borderColor={Colors.blue}
+        backgroundColor={Colors.blue}
+        onPressHeader={() => {
           (RegularAccountHelperBottomSheet as any).current.snapTo(0);
         }}
       />
@@ -978,7 +978,7 @@ function Accounts(props) {
                   fontFamily: Fonts.FiraSansRegular,
                 }}
               >
-                Received from contacts: 2,736 sats
+                Received from contacts: 42,736 sats
               </Text>
               <Text
                 style={{
@@ -1008,7 +1008,7 @@ function Accounts(props) {
                   fontFamily: Fonts.FiraSansRegular,
                 }}
               >
-                Received from contacts: 5,000 sats{' '}
+                Received from contacts: 125,000 sats{' '}
               </Text>
               <Text
                 style={{
