@@ -963,6 +963,66 @@ function Accounts(props) {
           />
         </View>
         <View>
+          {serviceType == REGULAR_ACCOUNT ? (
+            <View
+              style={{
+                backgroundColor: Colors.backgroundColor,
+                flexDirection: 'column',
+                marginLeft: 20,
+                marginRight: 20,
+                marginBottom: hp('2%'),
+              }}
+            >
+              <Text
+                style={{
+                  color: Colors.textColorGrey,
+                  fontSize: RFValue(13),
+                  fontFamily: Fonts.FiraSansRegular,
+                }}
+              >
+                Received from contacts: 2,736 sats
+              </Text>
+              <Text
+                style={{
+                  color: Colors.textColorGrey,
+                  fontSize: RFValue(13),
+                  fontFamily: Fonts.FiraSansRegular,
+                }}
+              >
+                Bought using GetBittr: 4,200 sats
+              </Text>
+            </View>
+          ) : null}
+          {serviceType == SECURE_ACCOUNT ? (
+            <View
+              style={{
+                backgroundColor: Colors.backgroundColor,
+                flexDirection: 'column',
+                marginLeft: 20,
+                marginRight: 20,
+                marginBottom: hp('2%'),
+              }}
+            >
+              <Text
+                style={{
+                  color: Colors.textColorGrey,
+                  fontSize: RFValue(13),
+                  fontFamily: Fonts.FiraSansRegular,
+                }}
+              >
+                Received from contacts: 55,736 sats{' '}
+              </Text>
+              <Text
+                style={{
+                  color: Colors.textColorGrey,
+                  fontSize: RFValue(13),
+                  fontFamily: Fonts.FiraSansRegular,
+                }}
+              >
+                Bought using GetBittr: 16,000 sats
+              </Text>
+            </View>
+          ) : null}
           <View
             style={{
               backgroundColor: Colors.backgroundColor,
