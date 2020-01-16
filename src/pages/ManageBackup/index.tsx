@@ -338,18 +338,38 @@ export default function ManageBackup(props) {
               switch (data.title) {
                 case 'Trusted Contact 2':
                   data.status = 'success';
+                  data.time = 'a minute ago';
                   break;
               }
             });
             setPageData(updatedPageData);
             setDummyHealth(100);
-          }, 10000);
+            AsyncStorage.setItem(
+              'dummyPageData',
+              JSON.stringify(updatedPageData),
+            );
+            AsyncStorage.setItem('dummyHealth', JSON.stringify(100));
+          }, 20000);
           CommunicationModeBottomSheet.current.snapTo(0);
           shareOtpWithTrustedContactBottomSheet.current.snapTo(1);
         }}
       />
     );
   }
+
+  useEffect(() => {
+    (async () => {
+      const updatedPageData = await AsyncStorage.getItem('dummyPageData');
+      if (updatedPageData) {
+        console.log(JSON.parse(updatedPageData));
+        setPageData(JSON.parse(updatedPageData));
+      }
+      const dummyHealth = await AsyncStorage.getItem('dummyHealth');
+      if (dummyHealth) {
+        setDummyHealth(JSON.parse(dummyHealth));
+      }
+    })();
+  }, []);
 
   function renderCommunicationModeModalHeader() {
     return (
@@ -750,59 +770,59 @@ export default function ManageBackup(props) {
   }, []);
 
   //const { overallHealth } = useSelector( state => state.sss );
-  useEffect(() => {
-    if (overallHealth) {
-      const updatedPageData = [...pageData];
-      updatedPageData.forEach(data => {
-        switch (data.title) {
-          case 'Secondary Device':
-            if (overallHealth.sharesInfo[0].shareStage === 'Good') {
-              data.status = 'success';
-            } else if (overallHealth.sharesInfo[0].shareStage === 'Bad') {
-              data.status = 'success';
-            } else if (overallHealth.sharesInfo[0].shareStage === 'Ugly') {
-              data.status = 'success';
-            }
-            break;
+  // useEffect(() => {
+  //   if (overallHealth) {
+  //     const updatedPageData = [...pageData];
+  //     updatedPageData.forEach(data => {
+  //       switch (data.title) {
+  //         case 'Secondary Device':
+  //           if (overallHealth.sharesInfo[0].shareStage === 'Good') {
+  //             data.status = 'success';
+  //           } else if (overallHealth.sharesInfo[0].shareStage === 'Bad') {
+  //             data.status = 'success';
+  //           } else if (overallHealth.sharesInfo[0].shareStage === 'Ugly') {
+  //             data.status = 'success';
+  //           }
+  //           break;
 
-          case 'Trusted Contact 1':
-            if (overallHealth.sharesInfo[1].shareStage === 'Good') {
-              data.status = 'success';
-            } else if (overallHealth.sharesInfo[1].shareStage === 'Bad') {
-              data.status = 'success';
-            } else if (overallHealth.sharesInfo[1].shareStage === 'Ugly') {
-              data.status = 'success';
-            }
-            break;
+  //         case 'Trusted Contact 1':
+  //           if (overallHealth.sharesInfo[1].shareStage === 'Good') {
+  //             data.status = 'success';
+  //           } else if (overallHealth.sharesInfo[1].shareStage === 'Bad') {
+  //             data.status = 'success';
+  //           } else if (overallHealth.sharesInfo[1].shareStage === 'Ugly') {
+  //             data.status = 'success';
+  //           }
+  //           break;
 
-          case 'Trusted Contact 2':
-            if (overallHealth.sharesInfo[2].shareStage === 'Good') {
-              data.status = 'success';
-            } else if (overallHealth.sharesInfo[2].shareStage === 'Bad') {
-              data.status = 'warning';
-            } else if (overallHealth.sharesInfo[2].shareStage === 'Ugly') {
-              data.status = 'error';
-            }
-            break;
+  //         case 'Trusted Contact 2':
+  //           if (overallHealth.sharesInfo[2].shareStage === 'Good') {
+  //             data.status = 'success';
+  //           } else if (overallHealth.sharesInfo[2].shareStage === 'Bad') {
+  //             data.status = 'warning';
+  //           } else if (overallHealth.sharesInfo[2].shareStage === 'Ugly') {
+  //             data.status = 'error';
+  //           }
+  //           break;
 
-          case 'Security Questions':
-            if (overallHealth.qaStatus === 'Good') {
-              data.status = 'success';
-            } else if (overallHealth.qaStatus === 'Bad') {
-              data.status = 'success';
-            } else if (overallHealth.qaStatus === 'Ugly') {
-              data.status = 'success';
-            }
-            break;
+  //         case 'Security Questions':
+  //           if (overallHealth.qaStatus === 'Good') {
+  //             data.status = 'success';
+  //           } else if (overallHealth.qaStatus === 'Bad') {
+  //             data.status = 'success';
+  //           } else if (overallHealth.qaStatus === 'Ugly') {
+  //             data.status = 'success';
+  //           }
+  //           break;
 
-          default:
-            break;
-        }
-      });
-      setPageData(updatedPageData);
-    }
-    // autoHighlightOptions();
-  }, [overallHealth]);
+  //         default:
+  //           break;
+  //       }
+  //     });
+  //     setPageData(updatedPageData);
+  //   }
+  //   // autoHighlightOptions();
+  // }, [overallHealth]);
 
   useEffect(() => {
     // HC down-streaming

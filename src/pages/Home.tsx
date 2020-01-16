@@ -86,6 +86,7 @@ import axios from 'axios';
 import { UsNumberFormat } from '../common/utilities';
 
 export default function Home(props) {
+  const [dummyHealth, setDummyHealth] = useState(80);
   const [QrBottomSheetsFlag, setQrBottomSheetsFlag] = useState(false);
   const [KnowMoreBottomSheetsFlag, setKnowMoreBottomSheetsFlag] = useState(
     false,
@@ -1623,6 +1624,15 @@ export default function Home(props) {
   //   );
   // };
 
+  useEffect(() => {
+    (async () => {
+      const dummyHealth = await AsyncStorage.getItem('dummyHealth');
+      if (dummyHealth) {
+        setDummyHealth(JSON.parse(dummyHealth));
+      }
+    })();
+  }, []);
+
   return (
     <ImageBackground
       source={require('../assets/images/home-bg.png')}
@@ -1690,12 +1700,11 @@ export default function Home(props) {
           </View>
           <View style={{ flexDirection: 'row' }}>
             <View style={{ flex: 7 }}>
-              {messageAsPerHealth(
-                overallHealth ? overallHealth.overallStatus : 0,
-              )}
+              {messageAsPerHealth(dummyHealth)}
               <TouchableOpacity
                 onPress={() => {
                   props.navigation.navigate('ManageBackup');
+                  setDummyHealth(100);
                 }}
                 style={styles.headerButton}
               >
@@ -1707,11 +1716,10 @@ export default function Home(props) {
                 activeOpacity={10}
                 onPress={() => {
                   props.navigation.navigate('ManageBackup');
+                  setDummyHealth(100);
                 }}
               >
-                <HomePageShield
-                  shieldStatus={overallHealth ? overallHealth.overallStatus : 0}
-                />
+                <HomePageShield shieldStatus={dummyHealth} />
               </TouchableOpacity>
             </View>
           </View>
