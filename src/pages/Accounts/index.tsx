@@ -795,6 +795,7 @@ function Accounts(props) {
   const netBalance = service
     ? balances.balance + balances.unconfirmedBalance
     : 0;
+
   const [averageTxFee, setAverageTxFee] = useState(0);
 
   const dispatch = useDispatch();

@@ -77,7 +77,11 @@ import ShareRecoverySecretModalContents from '../components/ShareRecoverySecretM
 import AsyncStorage from '@react-native-community/async-storage';
 import moment from 'moment';
 import { AppBottomSheetTouchableWrapper } from '../components/AppBottomSheetTouchableWrapper';
-import { getTestcoins } from '../store/actions/accounts';
+import {
+  getTestcoins,
+  fetchBalance,
+  fetchTransactions,
+} from '../store/actions/accounts';
 import axios from 'axios';
 import { UsNumberFormat } from '../common/utilities';
 
@@ -1461,6 +1465,18 @@ export default function Home(props) {
       }
     })();
   }, []);
+
+  // useEffect(() => {
+  //   (async () => {
+  //     if (!(await AsyncStorage.getItem('notFirstRun'))) {
+  //       dispatch(fetchBalance(REGULAR_ACCOUNT));
+  //       dispatch(fetchTransactions(REGULAR_ACCOUNT));
+  //       dispatch(fetchBalance(SECURE_ACCOUNT));
+  //       dispatch(fetchTransactions(SECURE_ACCOUNT));
+  //       await AsyncStorage.setItem('notFirstRun', 'true');
+  //     }
+  //   })();
+  // }, []);
 
   const renderRecoverySecretRequestModalContent = useCallback(() => {
     if (!recoveryRequest) return <View></View>;
