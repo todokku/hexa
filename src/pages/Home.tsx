@@ -1943,7 +1943,7 @@ export default function Home( props ) {
           /> */}
         </View>
       </View>
-      <TouchableWithoutFeedback>
+      {/* <TouchableWithoutFeedback>
         <Animated.View
           style={
             {
@@ -1958,7 +1958,7 @@ export default function Home( props ) {
             }
           }
         />
-      </TouchableWithoutFeedback>
+      </TouchableWithoutFeedback> */}
       <BottomSheet
         onOpenEnd={ () => {
           if ( selected == 'QR' ) {
