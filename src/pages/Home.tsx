@@ -271,7 +271,7 @@ export default function Home( props ) {
     {
       id: 1,
       title: 'Test Account',
-      unit: 'tsats',
+      unit: 't-sats',
       amount: '400,000',
       account: `Test Account`,
       accountType: 'test',
@@ -279,6 +279,15 @@ export default function Home( props ) {
     },
     {
       id: 2,
+      title: 'Savings Account',
+      unit: 'sats',
+      amount: '60,000',
+      account: 'Multi-factor security',
+      accountType: 'secure',
+      bitcoinicon: require( '../assets/images/icons/icon_bitcoin_gray.png' ),
+    },
+    {
+      id: 3,
       title: 'Regular Account',
       unit: 'sats',
       amount: '5,000',
@@ -287,14 +296,15 @@ export default function Home( props ) {
       bitcoinicon: require( '../assets/images/icons/icon_bitcoin_gray.png' ),
     },
     {
-      id: 3,
-      title: 'Savings Account',
-      unit: 'sats',
-      amount: '60,000',
-      account: 'Multi-factor security',
-      accountType: 'secure',
-      bitcoinicon: require( '../assets/images/icons/icon_bitcoin_gray.png' ),
+      id: 4,
+      title: 'Add Account',
+      unit: '',
+      amount: '',
+      account: '',
+      accountType: 'add',
+      bitcoinicon: require( '../assets/images/icons/icon_add.png' ),
     },
+
   ] );
 
   const [ transactionData, setTransactionData ] = useState( [
@@ -1749,106 +1759,144 @@ export default function Home( props ) {
               return (
                 <View style={ { flexDirection: 'column' } }>
                   { Items.item.map( value => {
-                    return (
-                      <TouchableOpacity
-                        onPress={ () => {
-                          props.navigation.navigate( 'Accounts', {
-                            serviceType:
-                              value.accountType === 'test'
-                                ? TEST_ACCOUNT
-                                : value.accountType === 'regular'
-                                  ? REGULAR_ACCOUNT
-                                  : SECURE_ACCOUNT,
-                          } );
-                        } }
-                      >
-                        <CardView cornerRadius={ 10 } style={ styles.card }>
-                          <View style={ { flexDirection: 'row' } }>
-                            <Image
-                              style={ { width: wp( '10%' ), height: wp( '10%' ) } }
-                              source={ getIconByAccountType( value.accountType ) }
-                            />
-                            { value.accountType == 'secure' ? (
-                              <TouchableOpacity
-                                onPress={ () => {
-                                  alert( '2FA' );
-                                } }
-                                style={ { marginLeft: 'auto' } }
-                              >
-                                <Text
-                                  style={ {
-                                    color: Colors.blue,
-                                    fontSize: RFValue( 11 ),
-                                    fontFamily: Fonts.FiraSansRegular,
-                                  } }
-                                >
-                                  2FA
-                                </Text>
-                              </TouchableOpacity>
-                            ) : null }
-                          </View>
-                          <View style={ { flex: 1, justifyContent: 'flex-end' } }>
-                            <Text style={ styles.cardTitle }>{ value.title }</Text>
-                            <Text
-                              style={ {
-                                color: Colors.textColorGrey,
-                                fontSize: RFValue( 11 ),
-                              } }
-                            >
-                              { value.accountType === 'test'
-                                ? `${ walletName }'s ${ value.account }`
-                                : value.account }
-                            </Text>
+                    if ( value.accountType === 'add' ) {
+                      return (
+                        <TouchableOpacity disabled={ true }>
+                          <CardView
+                            cornerRadius={ 10 }
+                            style={ {
+                              ...styles.card,
+                              opacity: 0.4,
+                              backgroundColor: Colors.borderColor,
+                            } }
+                          >
                             <View
                               style={ {
-                                flexDirection: 'row',
-                                alignItems: 'flex-end',
-                                marginTop: hp( '1%' ),
+                                flex: 1,
+                                justifyContent: 'center',
+                                alignItems: 'center',
                               } }
                             >
-                              { value.accountType === 'test' || switchOn ? (
-                                <Image
-                                  style={ styles.cardBitCoinImage }
-                                  source={ value.bitcoinicon }
-                                />
-                              ) : (
-                                  <Image
-                                    style={ styles.cardBitCoinImage }
-                                    source={ require( '../assets/images/icons/icon_dollar_dark.png' ) }
-                                  />
-                                ) }
-                              <Text style={ styles.cardAmountText }>
-                                { switchOn
-                                  ? value.accountType === 'test'
-                                    ? UsNumberFormat( balances.testBalance )
-                                    : value.accountType === 'regular'
-                                      ? UsNumberFormat( balances.regularBalance )
-                                      : UsNumberFormat( balances.secureBalance )
-                                  : value.accountType === 'test'
-                                    ? UsNumberFormat( balances.testBalance )
-                                    : value.accountType === 'regular'
-                                      ? (
-                                        ( balances.regularBalance / 1e8 ) *
-                                        exchangeRates[ 'USD' ].last
-                                      ).toFixed( 2 )
-                                      : (
-                                        ( balances.secureBalance / 1e8 ) *
-                                        exchangeRates[ 'USD' ].last
-                                      ).toFixed( 2 ) }
-                              </Text>
-                              <Text style={ styles.cardAmountUnitText }>
-                                { switchOn
-                                  ? value.unit
-                                  : value.accountType === 'test'
-                                    ? value.unit
-                                    : 'usd' }
+                              <Image
+                                style={ { width: wp( '10%' ), height: wp( '10%' ) } }
+                                source={ require( '../assets/images/icons/icon_add.png' ) }
+                              />
+                              <Text
+                                style={ {
+                                  color: Colors.textColorGrey,
+                                  fontSize: RFValue( 11 ),
+                                } }
+                              >
+                                Add Account
                               </Text>
                             </View>
-                          </View>
-                        </CardView>
-                      </TouchableOpacity>
-                    );
-                  } ) }
+                          </CardView>
+                        </TouchableOpacity>
+                      );
+                    }
+                    else {
+                      return (
+                        <TouchableOpacity
+                          onPress={ () => {
+                            props.navigation.navigate( 'Accounts', {
+                              serviceType:
+                                value.accountType === 'test'
+                                  ? TEST_ACCOUNT
+                                  : value.accountType === 'regular'
+                                    ? REGULAR_ACCOUNT
+                                    : SECURE_ACCOUNT,
+                            } );
+                          } }
+                        >
+                          <CardView cornerRadius={ 10 } style={ styles.card }>
+                            <View style={ { flexDirection: 'row' } }>
+                              <Image
+                                style={ { width: wp( '10%' ), height: wp( '10%' ) } }
+                                source={ getIconByAccountType( value.accountType ) }
+                              />
+                              { value.accountType == 'secure' ? (
+                                <TouchableOpacity
+                                  onPress={ () => {
+                                    alert( '2FA' );
+                                  } }
+                                  style={ { marginLeft: 'auto' } }
+                                >
+                                  <Text
+                                    style={ {
+                                      color: Colors.blue,
+                                      fontSize: RFValue( 11 ),
+                                      fontFamily: Fonts.FiraSansRegular,
+                                    } }
+                                  >
+                                    2FA
+                                </Text>
+                                </TouchableOpacity>
+                              ) : null }
+                            </View>
+                            <View style={ { flex: 1, justifyContent: 'flex-end' } }>
+                              <Text style={ styles.cardTitle }>{ value.title }</Text>
+                              <Text
+                                style={ {
+                                  color: Colors.textColorGrey,
+                                  fontSize: RFValue( 11 ),
+                                } }
+                              >
+                                { value.accountType === 'test'
+                                  ? `${ walletName }'s ${ value.account }`
+                                  : value.account }
+                              </Text>
+                              <View
+                                style={ {
+                                  flexDirection: 'row',
+                                  alignItems: 'flex-end',
+                                  marginTop: hp( '1%' ),
+                                } }
+                              >
+                                { value.accountType === 'test' || switchOn ? (
+                                  <Image
+                                    style={ styles.cardBitCoinImage }
+                                    source={ value.bitcoinicon }
+                                  />
+                                ) : (
+                                    <Image
+                                      style={ styles.cardBitCoinImage }
+                                      source={ require( '../assets/images/icons/icon_dollar_dark.png' ) }
+                                    />
+                                  ) }
+                                <Text style={ styles.cardAmountText }>
+                                  { switchOn
+                                    ? value.accountType === 'test'
+                                      ? UsNumberFormat( balances.testBalance )
+                                      : value.accountType === 'regular'
+                                        ? UsNumberFormat( balances.regularBalance )
+                                        : UsNumberFormat( balances.secureBalance )
+                                    : value.accountType === 'test'
+                                      ? UsNumberFormat( balances.testBalance )
+                                      : value.accountType === 'regular'
+                                        ? (
+                                          ( balances.regularBalance / 1e8 ) *
+                                          exchangeRates[ 'USD' ].last
+                                        ).toFixed( 2 )
+                                        : (
+                                          ( balances.secureBalance / 1e8 ) *
+                                          exchangeRates[ 'USD' ].last
+                                        ).toFixed( 2 ) }
+                                </Text>
+                                <Text style={ styles.cardAmountUnitText }>
+                                  { switchOn
+                                    ? value.unit
+                                    : value.accountType === 'test'
+                                      ? value.unit
+                                      : 'usd' }
+                                </Text>
+                              </View>
+                            </View>
+                          </CardView>
+                        </TouchableOpacity>
+                      );
+                    }
+                  } )
+                  }
                 </View>
               );
             } }
@@ -1909,7 +1957,7 @@ export default function Home( props ) {
                             color: Colors.textColorGrey,
                             fontSize: RFValue( 11, 812 ),
                           } }
-                        >
+                        >    
                           { Items.item.account }
                         </Text>
                         <View

@@ -33,163 +33,163 @@ import BottomInfoBox from '../components/BottomInfoBox';
 import { useDispatch, useSelector } from 'react-redux';
 import { initializeSetup } from '../store/actions/setupAndAuth';
 
-export default function NewWalletQuestion(props) {
-  const [dropdownBoxOpenClose, setDropdownBoxOpenClose] = useState(false);
-  const [dropdownBoxList, setDropdownBoxList] = useState(QuestionList);
-  const [dropdownBoxValue, setDropdownBoxValue] = useState({
+export default function NewWalletQuestion( props ) {
+  const [ dropdownBoxOpenClose, setDropdownBoxOpenClose ] = useState( false );
+  const [ dropdownBoxList, setDropdownBoxList ] = useState( QuestionList );
+  const [ dropdownBoxValue, setDropdownBoxValue ] = useState( {
     id: '',
     question: '',
-  });
-  const [answerInputStyle, setAnswerInputStyle] = useState(styles.inputBox);
-  const [confirmInputStyle, setConfirmAnswerInputStyle] = useState(
+  } );
+  const [ answerInputStyle, setAnswerInputStyle ] = useState( styles.inputBox );
+  const [ confirmInputStyle, setConfirmAnswerInputStyle ] = useState(
     styles.inputBox,
   );
-  const [confirmAnswer, setConfirmAnswer] = useState('');
-  const [answer, setAnswer] = useState('');
-  const [hideShowConfirmAnswer, setHideShowConfirmAnswer] = useState(true);
-  const [hideShowAnswer, setHdeShowAnswer] = useState(true);
-  let [counter, setCounter] = useState(0);
+  const [ confirmAnswer, setConfirmAnswer ] = useState( '' );
+  const [ answer, setAnswer ] = useState( '' );
+  const [ hideShowConfirmAnswer, setHideShowConfirmAnswer ] = useState( true );
+  const [ hideShowAnswer, setHdeShowAnswer ] = useState( true );
+  let [ counter, setCounter ] = useState( 0 );
   const dispatch = useDispatch();
-  const walletName = props.navigation.getParam('walletName');
-  const [ansError, setAnsError] = useState('');
-  const { isInitialized, loading } = useSelector(state => state.setupAndAuth);
-  if (isInitialized) {
-    props.navigation.navigate('HomeNav');
+  const walletName = props.navigation.getParam( 'walletName' );
+  const [ ansError, setAnsError ] = useState( '' );
+  const { isInitialized, loading } = useSelector( state => state.setupAndAuth );
+  if ( isInitialized ) {
+    props.navigation.navigate( 'HomeNav' );
   }
- 
-  const setConfirm =(event) => {
-    if(event.text){
-    if (answer && event.text != answer) {
-      setAnsError('Answers do not match');
-      counter++;
-      setCounter(counter);
-      console.log("counter",counter);
-      if(counter > 3){
-        console.log("global.ansCounter",counter);
-        setHdeShowAnswer(!hideShowAnswer);
-        counter = 0;
+
+  const setConfirm = ( event ) => {
+    if ( event.text ) {
+      if ( answer && event.text != answer ) {
+        setAnsError( 'Answers do not match' );
+        counter++;
+        setCounter( counter );
+        console.log( "counter", counter );
+        if ( counter > 3 ) {
+          console.log( "global.ansCounter", counter );
+          setHdeShowAnswer( !hideShowAnswer );
+          counter = 0;
+        }
+      } else {
+        setAnsError( '' );
       }
-    }else{
-      setAnsError('');
+    } else {
+      setAnsError( '' );
     }
-   }else{
-    setAnsError('');
-  }
   };
-  const setBackspace =(event) => {
-    console.log("event,key", event.nativeEvent.key);
-   
-   if(event.nativeEvent.key == "Backspace"){
-    setAnsError('');
-   }
+  const setBackspace = ( event ) => {
+    console.log( "event,key", event.nativeEvent.key );
+
+    if ( event.nativeEvent.key == "Backspace" ) {
+      setAnsError( '' );
+    }
   };
 
   useEffect( () => {
-    if ( answer.trim() == confirmAnswer.trim()) {
-      setAnsError('');
-      }
-  }, [confirmAnswer] );
+    if ( answer.trim() == confirmAnswer.trim() ) {
+      setAnsError( '' );
+    }
+  }, [ confirmAnswer ] );
 
   const setButtonVisible = () => {
     Keyboard.dismiss();
     //setAnsError('');
     return (
       <TouchableOpacity
-        onPress={() => {
+        onPress={ () => {
           const security = {
             question: dropdownBoxValue.question,
             answer,
           };
-          dispatch(initializeSetup(walletName, security));
-        }}
-        style={styles.buttonView}
+          dispatch( initializeSetup( walletName, security ) );
+        } }
+        style={ styles.buttonView }
       >
-        {!loading.initializing ? (
-          <Text style={styles.buttonText}>Confirm & Proceed</Text>
+        { !loading.initializing ? (
+          <Text style={ styles.buttonText }>Confirm</Text>
         ) : (
-          <ActivityIndicator size="small" />
-        )}
+            <ActivityIndicator size="small" />
+          ) }
       </TouchableOpacity>
     );
   };
 
-  
+
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <StatusBar backgroundColor={Colors.white} barStyle="dark-content" />
-      <View style={{ flex: 1 }}>
-        <View style={CommonStyles.headerContainer}>
+    <SafeAreaView style={ { flex: 1 } }>
+      <StatusBar backgroundColor={ Colors.white } barStyle="dark-content" />
+      <View style={ { flex: 1 } }>
+        <View style={ CommonStyles.headerContainer }>
           <TouchableOpacity
-            style={CommonStyles.headerLeftIconContainer}
-            onPress={() => {
-              props.navigation.navigate('RestoreAndRecoverWallet');
-            }}
+            style={ CommonStyles.headerLeftIconContainer }
+            onPress={ () => {
+              props.navigation.navigate( 'RestoreAndRecoverWallet' );
+            } }
           >
-            <View style={CommonStyles.headerLeftIconInnerContainer}>
+            <View style={ CommonStyles.headerLeftIconInnerContainer }>
               <FontAwesome
                 name="long-arrow-left"
-                color={Colors.blue}
-                size={17}
+                color={ Colors.blue }
+                size={ 17 }
               />
             </View>
           </TouchableOpacity>
         </View>
 
         <KeyboardAvoidingView
-          style={{ flex: 1 }}
-          behavior={Platform.OS == 'ios' ? 'padding' : ''}
+          style={ { flex: 1 } }
+          behavior={ Platform.OS == 'ios' ? 'padding' : '' }
           enabled
         >
           <TouchableOpacity
-            activeOpacity={10}
-            style={{ flex: 1 }}
-            onPress={() => {
-              setDropdownBoxOpenClose(false);
+            activeOpacity={ 10 }
+            style={ { flex: 1 } }
+            onPress={ () => {
+              setDropdownBoxOpenClose( false );
               Keyboard.dismiss();
-            }}
+            } }
           >
             <HeaderTitle
-              firstLineTitle={'New Hexa Wallet'}
-              secondLineTitle={''}
-              infoTextNormal={'Setup '}
-              infoTextBold={'secret question and answer'}
+              firstLineTitle={ 'New Hexa Wallet' }
+              secondLineTitle={ '' }
+              infoTextNormal={ 'Setup ' }
+              infoTextBold={ 'secret question and answer' }
             />
 
             <TouchableOpacity
-              activeOpacity={10}
+              activeOpacity={ 10 }
               style={
                 dropdownBoxOpenClose
                   ? styles.dropdownBoxOpened
                   : styles.dropdownBox
               }
-              onPress={() => {
-                setDropdownBoxOpenClose(!dropdownBoxOpenClose);
-              }}
+              onPress={ () => {
+                setDropdownBoxOpenClose( !dropdownBoxOpenClose );
+              } }
             >
-              <Text style={styles.dropdownBoxText}>
-                {dropdownBoxValue.question
+              <Text style={ styles.dropdownBoxText }>
+                { dropdownBoxValue.question
                   ? dropdownBoxValue.question
-                  : 'Select Question'}
+                  : 'Select Question' }
               </Text>
               <Ionicons
-                style={{ marginLeft: 'auto' }}
-                name={dropdownBoxOpenClose ? 'ios-arrow-up' : 'ios-arrow-down'}
-                size={20}
-                color={Colors.textColorGrey}
+                style={ { marginLeft: 'auto' } }
+                name={ dropdownBoxOpenClose ? 'ios-arrow-up' : 'ios-arrow-down' }
+                size={ 20 }
+                color={ Colors.textColorGrey }
               />
             </TouchableOpacity>
             <ScrollView>
-              {dropdownBoxOpenClose ? (
-                <View style={styles.dropdownBoxModal}>
-                  {dropdownBoxList.map((value, index) => (
+              { dropdownBoxOpenClose ? (
+                <View style={ styles.dropdownBoxModal }>
+                  { dropdownBoxList.map( ( value, index ) => (
                     <TouchableOpacity
-                      onPress={() => {
-                        setTimeout(() => {
-                          setDropdownBoxValue(value);
-                          setDropdownBoxOpenClose(false);
-                        }, 70);
-                      }}
-                      style={{
+                      onPress={ () => {
+                        setTimeout( () => {
+                          setDropdownBoxValue( value );
+                          setDropdownBoxOpenClose( false );
+                        }, 70 );
+                      } }
+                      style={ {
                         ...styles.dropdownBoxModalElementView,
                         borderTopLeftRadius: index == 0 ? 10 : 0,
                         borderTopRightRadius: index == 0 ? 10 : 0,
@@ -203,28 +203,28 @@ export default function NewWalletQuestion(props) {
                             ? Colors.lightBlue
                             : Colors.white
                           : Colors.white,
-                      }}
+                      } }
                     >
                       <Text
-                        style={{
+                        style={ {
                           color:
                             dropdownBoxValue.id == value.id
                               ? Colors.blue
                               : Colors.black,
                           fontFamily: Fonts.FiraSansRegular,
-                          fontSize: RFValue(12),
-                        }}
+                          fontSize: RFValue( 12 ),
+                        } }
                       >
-                        {value.question}
+                        { value.question }
                       </Text>
                     </TouchableOpacity>
-                  ))}
+                  ) ) }
                 </View>
-              ) : null}
-              {dropdownBoxValue.id ? (
-                <View style={{ marginTop: 15 }}>
+              ) : null }
+              { dropdownBoxValue.id ? (
+                <View style={ { marginTop: 15 } }>
                   <View
-                    style={{
+                    style={ {
                       ...answerInputStyle,
                       flexDirection: 'row',
                       alignItems: 'center',
@@ -233,40 +233,40 @@ export default function NewWalletQuestion(props) {
                         ansError
                           ? Colors.red
                           : Colors.borderColor,
-                    }}
+                    } }
                   >
                     <TextInput
-                      style={styles.modalInputBox}
-                      secureTextEntry={hideShowAnswer}
-                      placeholder={'Enter your answer'}
-                      placeholderTextColor={Colors.borderColor}
-                      value={answer}
+                      style={ styles.modalInputBox }
+                      secureTextEntry={ hideShowAnswer }
+                      placeholder={ 'Enter your answer' }
+                      placeholderTextColor={ Colors.borderColor }
+                      value={ answer }
                       autoCapitalize="none"
-                      onChangeText={text => setAnswer(text)}
-                      onFocus={() => {
-                        setDropdownBoxOpenClose(false);
-                        setAnswerInputStyle(styles.inputBoxFocused);
-                      }}
-                      onBlur={() => {
-                        setAnswerInputStyle(styles.inputBox);
-                        setDropdownBoxOpenClose(false);
-                      }}
+                      onChangeText={ text => setAnswer( text ) }
+                      onFocus={ () => {
+                        setDropdownBoxOpenClose( false );
+                        setAnswerInputStyle( styles.inputBoxFocused );
+                      } }
+                      onBlur={ () => {
+                        setAnswerInputStyle( styles.inputBox );
+                        setDropdownBoxOpenClose( false );
+                      } }
                     />
                     <TouchableWithoutFeedback
-                      onPress={() => {
-                        setHdeShowAnswer(!hideShowAnswer);
-                      }}
+                      onPress={ () => {
+                        setHdeShowAnswer( !hideShowAnswer );
+                      } }
                     >
                       <Feather
-                        style={{ marginLeft: 'auto', padding: 10 }}
-                        size={15}
-                        color={Colors.blue}
-                        name={hideShowAnswer ? 'eye-off' : 'eye'}
+                        style={ { marginLeft: 'auto', padding: 10 } }
+                        size={ 15 }
+                        color={ Colors.blue }
+                        name={ hideShowAnswer ? 'eye-off' : 'eye' }
                       />
                     </TouchableWithoutFeedback>
                   </View>
                   <View
-                    style={{
+                    style={ {
                       ...confirmInputStyle,
                       marginBottom: 15,
                       flexDirection: 'row',
@@ -277,95 +277,95 @@ export default function NewWalletQuestion(props) {
                         ansError
                           ? Colors.red
                           : Colors.borderColor,
-                    }}
+                    } }
                   >
                     <TextInput
-                      style={styles.modalInputBox}
-                      secureTextEntry={hideShowConfirmAnswer}
-                      placeholder={'Confirm your answer'}
-                      placeholderTextColor={Colors.borderColor}
+                      style={ styles.modalInputBox }
+                      secureTextEntry={ hideShowConfirmAnswer }
+                      placeholder={ 'Confirm your answer' }
+                      placeholderTextColor={ Colors.borderColor }
                       //value={confirmAnswer}
                       autoCapitalize="none"
-                      onKeyPress ={event => {
-                        setBackspace(event);
-                      }}
-                      onChangeText={text => {
-                        setConfirmAnswer(text);
-                      }}
+                      onKeyPress={ event => {
+                        setBackspace( event );
+                      } }
+                      onChangeText={ text => {
+                        setConfirmAnswer( text );
+                      } }
                       onSubmitEditing={
-                        (event) => (setConfirm(event.nativeEvent))
+                        ( event ) => ( setConfirm( event.nativeEvent ) )
                       }
-                      onFocus={() => {
-                        setDropdownBoxOpenClose(false);
-                        setConfirmAnswerInputStyle(styles.inputBoxFocused);
-                      }}
-                      onBlur={() => {
-                        setConfirmAnswerInputStyle(styles.inputBox);
-                        setDropdownBoxOpenClose(false);
-                      }}
+                      onFocus={ () => {
+                        setDropdownBoxOpenClose( false );
+                        setConfirmAnswerInputStyle( styles.inputBoxFocused );
+                      } }
+                      onBlur={ () => {
+                        setConfirmAnswerInputStyle( styles.inputBox );
+                        setDropdownBoxOpenClose( false );
+                      } }
                     />
                     <TouchableWithoutFeedback
-                      onPress={() => {
-                        setHideShowConfirmAnswer(!hideShowConfirmAnswer);
-                        setDropdownBoxOpenClose(false);
-                      }}
+                      onPress={ () => {
+                        setHideShowConfirmAnswer( !hideShowConfirmAnswer );
+                        setDropdownBoxOpenClose( false );
+                      } }
                     >
                       <Feather
-                        style={{ marginLeft: 'auto', padding: 10 }}
-                        size={15}
-                        color={Colors.blue}
-                        name={hideShowConfirmAnswer ? 'eye-off' : 'eye'}
+                        style={ { marginLeft: 'auto', padding: 10 } }
+                        size={ 15 }
+                        color={ Colors.blue }
+                        name={ hideShowConfirmAnswer ? 'eye-off' : 'eye' }
                       />
                     </TouchableWithoutFeedback>
                   </View>
                 </View>
               ) : (
-                <View style={{ marginTop: 15 }} />
-              )}
+                  <View style={ { marginTop: 15 } } />
+                ) }
               <View
-                style={{
+                style={ {
                   marginLeft: 20,
                   marginRight: 20,
                   flexDirection: 'row',
-                }}
+                } }
               >
                 <Text
-                  style={{
+                  style={ {
                     color: Colors.red,
                     fontFamily: Fonts.FiraSansMediumItalic,
-                    fontSize: RFValue(10),
+                    fontSize: RFValue( 10 ),
                     marginLeft: 'auto',
-                  }}
+                  } }
                 >
-                  {ansError}
+                  { ansError }
                 </Text>
               </View>
             </ScrollView>
 
-            <View style={styles.bottomButtonView}>
-              {answer.trim() == confirmAnswer.trim() &&
-              confirmAnswer.trim() &&
-              answer.trim() ? (
-                setButtonVisible()
-              ) : (
-                <View
-                  style={{
-                    height: wp('13%'),
-                    width: wp('30%'),
-                  }}
-                />
-              )}
-              <View style={styles.statusIndicatorView}>
-                <View style={styles.statusIndicatorInactiveView} />
-                <View style={styles.statusIndicatorActiveView} />
+            <View style={ styles.bottomButtonView }>
+              { answer.trim() == confirmAnswer.trim() &&
+                confirmAnswer.trim() &&
+                answer.trim() ? (
+                  setButtonVisible()
+                ) : (
+                  <View
+                    style={ {
+                      height: wp( '13%' ),
+                      width: wp( '30%' ),
+                    } }
+                  />
+                ) }
+              <View style={ styles.statusIndicatorView }>
+                <View style={ styles.statusIndicatorInactiveView } />
+                <View style={ styles.statusIndicatorActiveView } />
               </View>
             </View>
-            {dropdownBoxValue.id.trim() == '' ? (
+            { dropdownBoxValue.id.trim() == '' ? (
               <BottomInfoBox
-                title={'This question will serve as a hint'}
-                infoText={'For you to remember what the answer was'}
+                title={ 'This question will serve as a hint' }
+                infoText={ 'For you to remember what the answer was' }
               />
-            ) : null}
+            ) : null }
           </TouchableOpacity>
         </KeyboardAvoidingView>
       </View>
@@ -373,7 +373,7 @@ export default function NewWalletQuestion(props) {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create( {
   dropdownBox: {
     flexDirection: 'row',
     borderColor: Colors.borderColor,
@@ -406,8 +406,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   buttonView: {
-    height: wp('13%'),
-    width: wp('35%'),
+    height: wp( '13%' ),
+    width: wp( '35%' ),
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 8,
@@ -419,7 +419,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: Colors.white,
-    fontSize: RFValue(13),
+    fontSize: RFValue( 13 ),
     fontFamily: Fonts.FiraSansMedium,
   },
   bottomButtonView: {
@@ -467,7 +467,7 @@ const styles = StyleSheet.create({
   modalInputBox: {
     flex: 1,
     height: 50,
-    fontSize: RFValue(13),
+    fontSize: RFValue( 13 ),
     color: Colors.textColorGrey,
     fontFamily: Fonts.FiraSansRegular,
     paddingLeft: 15,
@@ -475,7 +475,7 @@ const styles = StyleSheet.create({
   dropdownBoxText: {
     color: Colors.textColorGrey,
     fontFamily: Fonts.FiraSansRegular,
-    fontSize: RFValue(13),
+    fontSize: RFValue( 13 ),
   },
   dropdownBoxModal: {
     borderRadius: 10,
@@ -493,4 +493,4 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
     paddingRight: 15,
   },
-});
+} );
