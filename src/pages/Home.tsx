@@ -469,7 +469,7 @@ export default function Home( props ) {
 
   const renderTransactionsContent = () => {
     return (
-      <View style={ styles.modalContentContainer }>
+      <View style={ [ styles.modalContentContainer ] }>
         <FlatList
           data={ transactions }
           ItemSeparatorComponent={ () => (
@@ -477,17 +477,19 @@ export default function Home( props ) {
               <View style={ styles.separatorView } />
             </View>
           ) }
+          ListFooterComponent={ <View style={ { margin: 50, } } /> }
           renderItem={ ( { item } ) => (
             <AppBottomSheetTouchableWrapper
               onPress={ () =>
                 props.navigation.navigate( 'TransactionDetails', { item } )
               }
-              style={ {
-                ...styles.transactionModalElementView,
-                backgroundColor: Colors.white,
-              } }
+              style={ [
+                {
+                  ...styles.transactionModalElementView,
+                  backgroundColor: Colors.white,
+                } ] }
             >
-              <View style={ styles.modalElementInfoView }>
+              <View style={ [ styles.modalElementInfoView ] }>
                 <View style={ { justifyContent: 'center' } }>
                   <FontAwesome
                     name={
@@ -2024,9 +2026,19 @@ export default function Home( props ) {
         } }
         enabledInnerScrolling={ true }
         ref={ bottomSheet }
-        initialSnap={ zeroIndex }
-        snapPoints={ snapPoints }
-        callbackNode={ position }
+        //initialSnap={ zeroIndex }
+        //snapPoints={ snapPoints }
+        //callbackNode={ position }
+        snapPoints={ [
+          -50,
+          Platform.OS == 'ios' && DeviceInfo.hasNotch()
+            ? hp( '18%' )
+            : Platform.OS == 'android'
+              ? hp( '20%' )
+              : hp( '19%' ),
+          Platform.OS == 'ios' && DeviceInfo.hasNotch() ? hp( '65%' ) : hp( '75%' ),
+          hp( '90%' ),
+        ] }
         renderContent={ renderContent1 }
         renderHeader={ renderHeader }
       />
