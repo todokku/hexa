@@ -7,7 +7,7 @@ export default () => {
   console.disableYellowBox = true;
 
   return (
-    <Provider store={store}>
+    <Provider store={ store }>
       <Navigator />
     </Provider>
   );
