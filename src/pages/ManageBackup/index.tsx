@@ -239,6 +239,8 @@ export default function ManageBackup( props ) {
     state => state.sss.loading.checkMSharesHealth,
   );
 
+
+
   function getImageByType( item ) {
     let type = item.type;
     if ( type == 'secondaryDevice' ) {
