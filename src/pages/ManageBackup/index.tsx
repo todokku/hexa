@@ -52,53 +52,53 @@ import { timeFormatter } from '../../common/CommonFunctions/timeFormatter';
 import moment from 'moment';
 import AsyncStorage from '@react-native-community/async-storage';
 
-export default function ManageBackup(props) {
+export default function ManageBackup( props ) {
   const [
     PersonalCopyQRScannerBottomSheet,
     setPersonalCopyQRScannerBottomSheet,
-  ] = useState(React.createRef());
-  const [IsReshare, setIsReshare] = useState(false);
-  const [selectedTime, setSelectedTime] = useState('');
-  const [selectedStatus, setSelectedStatus] = useState('Ugly');
-  const [isNextStepDisable, setIsNextStepDisable] = useState(false);
-  const [LoadCamera, setLoadCamera] = useState(false);
-  const [ChangeBottomSheet, setChangeBottomSheet] = useState(React.createRef());
-  const [ReshareBottomSheet, setReshareBottomSheet] = useState(
+  ] = useState( React.createRef() );
+  const [ IsReshare, setIsReshare ] = useState( false );
+  const [ selectedTime, setSelectedTime ] = useState( '' );
+  const [ selectedStatus, setSelectedStatus ] = useState( 'Ugly' );
+  const [ isNextStepDisable, setIsNextStepDisable ] = useState( false );
+  const [ LoadCamera, setLoadCamera ] = useState( false );
+  const [ ChangeBottomSheet, setChangeBottomSheet ] = useState( React.createRef() );
+  const [ ReshareBottomSheet, setReshareBottomSheet ] = useState(
     React.createRef(),
   );
-  const [ConfirmBottomSheet, setConfirmBottomSheet] = useState(
+  const [ ConfirmBottomSheet, setConfirmBottomSheet ] = useState(
     React.createRef(),
   );
-  const [SelectTypeToReshare, setSelectTypeToReshare] = useState({});
+  const [ SelectTypeToReshare, setSelectTypeToReshare ] = useState( {} );
   let [
     secondaryDeviceAutoHighlightFlags,
     setSecondaryDeviceAutoHighlightFlags,
-  ] = useState('');
+  ] = useState( '' );
   let [
     personalCopy1AutoHighlightFlags,
     setPersonalCopy1AutoHighlightFlags,
-  ] = useState('');
+  ] = useState( '' );
   let [
     personalCopy2AutoHighlightFlags,
     setPersonalCopy2AutoHighlightFlags,
-  ] = useState('');
-  let [securityAutoHighlightFlags, setSecurityAutoHighlightFlags] = useState(
+  ] = useState( '' );
+  let [ securityAutoHighlightFlags, setSecurityAutoHighlightFlags ] = useState(
     'true',
   );
   const [
     SecondaryDeviceHistoryBottomSheet,
     setSecondaryDeviceHistoryBottomSheet,
-  ] = useState(React.createRef());
+  ] = useState( React.createRef() );
   const [
     PersonalCopyHistoryBottomSheet,
     setPersonalCopyHistoryBottomSheet,
-  ] = useState(React.createRef());
+  ] = useState( React.createRef() );
   const [
     SecurityQuestionHistoryBottomSheet,
     setSecurityQuestionHistoryBottomSheet,
-  ] = useState(React.createRef());
-  const [selectedPersonalCopy, setSelectedPersonalCopy] = useState();
-  const [secondaryDeviceHistory, setSecondaryDeviceHistory] = useState([
+  ] = useState( React.createRef() );
+  const [ selectedPersonalCopy, setSelectedPersonalCopy ] = useState();
+  const [ secondaryDeviceHistory, setSecondaryDeviceHistory ] = useState( [
     {
       id: 1,
       title: 'Recovery Secret Not Accessible',
@@ -136,19 +136,19 @@ export default function ManageBackup(props) {
       date: '19 May ‘19, 11:00am',
       info: 'Lorem ipsum dolor Lorem dolor sit amet, consectetur dolor sit',
     },
-  ]);
+  ] );
 
   const [
     WalletBackupAndRecoveryBottomSheet,
     setWalletBackupAndRecoveryBottomSheet,
-  ] = useState(React.createRef());
-  const [secondaryDeviceBottomSheet, setSecondaryDeviceBottomSheet] = useState(
+  ] = useState( React.createRef() );
+  const [ secondaryDeviceBottomSheet, setSecondaryDeviceBottomSheet ] = useState(
     React.createRef(),
   );
   const [
     CommunicationModeBottomSheet,
     setCommunicationModeBottomSheet,
-  ] = useState(React.createRef());
+  ] = useState( React.createRef() );
   // const [
   //   SecurityQuestionBottomSheet,
   //   setSecurityQuestionBottomSheet,
@@ -160,7 +160,7 @@ export default function ManageBackup(props) {
   const [
     RegenerateShareHelperBottomSheet,
     setRegenerateShareHelperBottomSheet,
-  ] = useState(React.createRef());
+  ] = useState( React.createRef() );
   // const [
   //   PersonalCopy1ShareBottomSheet,
   //   setPersonalCopy1ShareBottomSheet,
@@ -172,17 +172,17 @@ export default function ManageBackup(props) {
   const [
     shareOtpWithTrustedContactBottomSheet,
     setShareOtpWithTrustedContactBottomSheet,
-  ] = useState(React.createRef());
-  const [selectedType, setSelectedType] = useState('');
-  const [contacts, setContacts] = useState([]);
-  const [isSecretShared1, setIsSecretShared1] = useState(false);
-  const [isSecretShared2, setIsSecretShared2] = useState(false);
-  const [pageData, setPageData] = useState([
+  ] = useState( React.createRef() );
+  const [ selectedType, setSelectedType ] = useState( '' );
+  const [ contacts, setContacts ] = useState( [] );
+  const [ isSecretShared1, setIsSecretShared1 ] = useState( false );
+  const [ isSecretShared2, setIsSecretShared2 ] = useState( false );
+  const [ pageData, setPageData ] = useState( [
     {
       title: 'Secondary Device',
       personalInfo: null,
       time: 'never',
-      status: 'Ugly',
+      status: 'Good',
       type: 'secondaryDevice',
       route: 'SecondaryDevice',
     },
@@ -190,7 +190,7 @@ export default function ManageBackup(props) {
       title: 'Trusted Contact 1',
       personalInfo: null,
       time: 'never',
-      status: 'Ugly',
+      status: 'Good',
       type: 'contact1',
       route: 'TrustedContacts',
       isOTPShared: false,
@@ -208,7 +208,7 @@ export default function ManageBackup(props) {
       title: 'Personal Copy 1',
       personalInfo: null,
       time: 'never',
-      status: 'Ugly',
+      status: 'Good',
       type: 'copy1',
       route: 'PersonalCopy',
     },
@@ -216,7 +216,7 @@ export default function ManageBackup(props) {
       title: 'Personal Copy 2',
       personalInfo: null,
       time: 'never',
-      status: 'Ugly',
+      status: 'Good',
       type: 'copy2',
       route: 'PersonalCopy',
     },
@@ -224,28 +224,28 @@ export default function ManageBackup(props) {
       title: 'Security Questions',
       personalInfo: null,
       time: 'never',
-      status: 'Ugly',
+      status: 'Good',
       type: 'security',
       route: 'HealthCheckSecurityAnswer',
     },
-  ]);
+  ] );
   const dispatch = useDispatch();
-  const s3Service: S3Service = useSelector(state => state.sss.service);
+  const s3Service: S3Service = useSelector( state => state.sss.service );
   // const { databaseSSS } = useSelector(state => state.storage);
-  const [overallHealth, setOverallHealth] = useState();
-  const health = useSelector(state => state.sss.overallHealth);
+  const [ overallHealth, setOverallHealth ] = useState();
+  const health = useSelector( state => state.sss.overallHealth );
   //const { overallHealth } = useSelector( state => state.sss );
   const healthLoading = useSelector(
     state => state.sss.loading.checkMSharesHealth,
   );
 
-  function getImageByType(item) {
+  function getImageByType( item ) {
     let type = item.type;
-    if (type == 'secondaryDevice') {
-      return require('../../assets/images/icons/icon_secondarydevice.png');
-    } else if (type == 'contact1' || type == 'contact2') {
-      return require('../../assets/images/icons/icon_user.png');
-    } else if (type == 'copy1' || type == 'copy2') {
+    if ( type == 'secondaryDevice' ) {
+      return require( '../../assets/images/icons/icon_secondarydevice.png' );
+    } else if ( type == 'contact1' || type == 'contact2' ) {
+      return require( '../../assets/images/icons/icon_user.png' );
+    } else if ( type == 'copy1' || type == 'copy2' ) {
       if (
         item.personalInfo &&
         item.personalInfo.flagShare &&
@@ -265,23 +265,23 @@ export default function ManageBackup(props) {
       ) {
         return Icons.manageBackup.PersonalCopy.print;
       } else {
-        return require('../../assets/images/icons/note.png');
+        return require( '../../assets/images/icons/note.png' );
       }
     }
-    if (type == 'print') {
-      return require('../../assets/images/icons/print.png');
-    } else if (type == 'security') {
-      return require('../../assets/images/icons/icon_securityquestion.png');
+    if ( type == 'print' ) {
+      return require( '../../assets/images/icons/print.png' );
+    } else if ( type == 'security' ) {
+      return require( '../../assets/images/icons/icon_securityquestion.png' );
     }
   }
 
   const getIconByStatus = status => {
-    if (status == 'Ugly') {
-      return require('../../assets/images/icons/icon_error_red.png');
-    } else if (status == 'Bad') {
-      return require('../../assets/images/icons/icon_error_yellow.png');
-    } else if (status == 'Good') {
-      return require('../../assets/images/icons/icon_check.png');
+    if ( status == 'Ugly' ) {
+      return require( '../../assets/images/icons/icon_error_red.png' );
+    } else if ( status == 'Bad' ) {
+      return require( '../../assets/images/icons/icon_error_yellow.png' );
+    } else if ( status == 'Good' ) {
+      return require( '../../assets/images/icons/icon_check.png' );
     }
   };
 
@@ -462,15 +462,15 @@ export default function ManageBackup(props) {
   const renderWalletBackupAndRecoveryContents = () => {
     return (
       <WalletBackupAndRecoveryContents
-        onPressManageBackup={() => {
-          WalletBackupAndRecoveryBottomSheet.current.snapTo(0);
-        }}
-        onSkip={() => {
-          WalletBackupAndRecoveryBottomSheet.current.snapTo(0);
-        }}
-        onStartBackup={() => {
-          WalletBackupAndRecoveryBottomSheet.current.snapTo(0);
-        }}
+        onPressManageBackup={ () => {
+          WalletBackupAndRecoveryBottomSheet.current.snapTo( 0 );
+        } }
+        onSkip={ () => {
+          WalletBackupAndRecoveryBottomSheet.current.snapTo( 0 );
+        } }
+        onStartBackup={ () => {
+          WalletBackupAndRecoveryBottomSheet.current.snapTo( 0 );
+        } }
       />
     );
   };
@@ -478,11 +478,11 @@ export default function ManageBackup(props) {
   const renderWalletBackupAndRecoveryHeader = () => {
     return (
       <ModalHeader
-        borderColor={Colors.blue}
-        backgroundColor={Colors.blue}
-        onPressHeader={() => {
-          WalletBackupAndRecoveryBottomSheet.current.snapTo(0);
-        }}
+        borderColor={ Colors.blue }
+        backgroundColor={ Colors.blue }
+        onPressHeader={ () => {
+          WalletBackupAndRecoveryBottomSheet.current.snapTo( 0 );
+        } }
       />
     );
   };
@@ -490,31 +490,31 @@ export default function ManageBackup(props) {
   const renderRegenerateShareHelperContents = () => {
     return (
       <RegenerateHealper
-        topButtonText={'Regenerate Shares'}
-        continueButtonText={'Continue'}
-        quitButtonText={'Quit'}
-        onPressRegenerateShare={() => {
-          (RegenerateShareHelperBottomSheet as any).current.snapTo(0);
-          props.navigation.navigate('NewWalletNameRegenerateShare');
-        }}
-        onPressContinue={() => {
-          (RegenerateShareHelperBottomSheet as any).current.snapTo(0);
-          props.navigation.navigate('NewWalletNameRegenerateShare');
-        }}
-        onPressQuit={() => {
-          (RegenerateShareHelperBottomSheet as any).current.snapTo(0);
-        }}
+        topButtonText={ 'Regenerate Shares' }
+        continueButtonText={ 'Continue' }
+        quitButtonText={ 'Quit' }
+        onPressRegenerateShare={ () => {
+          ( RegenerateShareHelperBottomSheet as any ).current.snapTo( 0 );
+          props.navigation.navigate( 'NewWalletNameRegenerateShare' );
+        } }
+        onPressContinue={ () => {
+          ( RegenerateShareHelperBottomSheet as any ).current.snapTo( 0 );
+          props.navigation.navigate( 'NewWalletNameRegenerateShare' );
+        } }
+        onPressQuit={ () => {
+          ( RegenerateShareHelperBottomSheet as any ).current.snapTo( 0 );
+        } }
       />
     );
   };
   const renderRegenerateShareHelperHeader = () => {
     return (
       <SmallHeaderModal
-        borderColor={Colors.blue}
-        backgroundColor={Colors.blue}
-        onPressHandle={() => {
-          (RegenerateShareHelperBottomSheet as any).current.snapTo(0);
-        }}
+        borderColor={ Colors.blue }
+        backgroundColor={ Colors.blue }
+        onPressHandle={ () => {
+          ( RegenerateShareHelperBottomSheet as any ).current.snapTo( 0 );
+        } }
       />
     );
   };
@@ -575,21 +575,21 @@ export default function ManageBackup(props) {
   const renderSecondaryDeviceHistoryContent = () => {
     return (
       <SecondaryDeviceHealthCheck
-        data={secondaryDeviceHistory}
-        title={'Secondary Device'}
-        time={selectedTime}
-        status={selectedStatus}
-        reshareInfo={'consectetur Lorem ipsum dolor sit amet, consectetur sit '}
-        onPressConfirm={() => {
-          ConfirmBottomSheet.current.snapTo(1);
-        }}
-        onPressReshare={() => {
-          ReshareBottomSheet.current.snapTo(1);
-        }}
-        modalRef={SecondaryDeviceHistoryBottomSheet}
-        onPressBack={() => {
-          SecondaryDeviceHistoryBottomSheet.current.snapTo(0);
-        }}
+        data={ secondaryDeviceHistory }
+        title={ 'Secondary Device' }
+        time={ selectedTime }
+        status={ selectedStatus }
+        reshareInfo={ 'consectetur Lorem ipsum dolor sit amet, consectetur sit ' }
+        onPressConfirm={ () => {
+          ConfirmBottomSheet.current.snapTo( 1 );
+        } }
+        onPressReshare={ () => {
+          ReshareBottomSheet.current.snapTo( 1 );
+        } }
+        modalRef={ SecondaryDeviceHistoryBottomSheet }
+        onPressBack={ () => {
+          SecondaryDeviceHistoryBottomSheet.current.snapTo( 0 );
+        } }
       />
     );
   };
@@ -597,10 +597,10 @@ export default function ManageBackup(props) {
   const renderSecondaryDeviceHistoryHeader = () => {
     return (
       <ModalHeader
-        backgroundColor={Colors.backgroundColor}
-        onPressHeader={() => {
-          SecondaryDeviceHistoryBottomSheet.current.snapTo(0);
-        }}
+        backgroundColor={ Colors.backgroundColor }
+        onPressHeader={ () => {
+          SecondaryDeviceHistoryBottomSheet.current.snapTo( 0 );
+        } }
       />
     );
   };
@@ -608,21 +608,21 @@ export default function ManageBackup(props) {
   const renderPersonalCopyHistoryContent = () => {
     return (
       <SecondaryDeviceHealthCheck
-        data={secondaryDeviceHistory}
-        title={'Personal Copy'}
-        time={selectedTime}
-        status={selectedStatus}
-        reshareInfo={'consectetur Lorem ipsum dolor sit amet, consectetur sit '}
-        onPressConfirm={() => {
-          ConfirmBottomSheet.current.snapTo(1);
-        }}
-        onPressReshare={() => {
-          ReshareBottomSheet.current.snapTo(1);
-        }}
-        modalRef={PersonalCopyHistoryBottomSheet}
-        onPressBack={() => {
-          PersonalCopyHistoryBottomSheet.current.snapTo(0);
-        }}
+        data={ secondaryDeviceHistory }
+        title={ 'Personal Copy' }
+        time={ selectedTime }
+        status={ selectedStatus }
+        reshareInfo={ 'consectetur Lorem ipsum dolor sit amet, consectetur sit ' }
+        onPressConfirm={ () => {
+          ConfirmBottomSheet.current.snapTo( 1 );
+        } }
+        onPressReshare={ () => {
+          ReshareBottomSheet.current.snapTo( 1 );
+        } }
+        modalRef={ PersonalCopyHistoryBottomSheet }
+        onPressBack={ () => {
+          PersonalCopyHistoryBottomSheet.current.snapTo( 0 );
+        } }
       />
     );
   };
@@ -630,10 +630,10 @@ export default function ManageBackup(props) {
   const renderPersonalCopyHistoryHeader = () => {
     return (
       <ModalHeader
-        backgroundColor={Colors.backgroundColor}
-        onPressHeader={() => {
-          PersonalCopyHistoryBottomSheet.current.snapTo(0);
-        }}
+        backgroundColor={ Colors.backgroundColor }
+        onPressHeader={ () => {
+          PersonalCopyHistoryBottomSheet.current.snapTo( 0 );
+        } }
       />
     );
   };
@@ -641,17 +641,17 @@ export default function ManageBackup(props) {
   const renderSecurityQuestionHistoryContent = () => {
     return (
       <SecondaryDeviceHealthCheck
-        data={secondaryDeviceHistory}
-        title={'Security Question'}
-        time={selectedTime}
-        status={selectedStatus}
-        onPressConfirm={() => {
-          ConfirmBottomSheet.current.snapTo(1);
-        }}
-        modalRef={SecurityQuestionHistoryBottomSheet}
-        onPressBack={() => {
-          SecurityQuestionHistoryBottomSheet.current.snapTo(0);
-        }}
+        data={ secondaryDeviceHistory }
+        title={ 'Security Question' }
+        time={ selectedTime }
+        status={ selectedStatus }
+        onPressConfirm={ () => {
+          ConfirmBottomSheet.current.snapTo( 1 );
+        } }
+        modalRef={ SecurityQuestionHistoryBottomSheet }
+        onPressBack={ () => {
+          SecurityQuestionHistoryBottomSheet.current.snapTo( 0 );
+        } }
       />
     );
   };
@@ -659,10 +659,10 @@ export default function ManageBackup(props) {
   const renderSecurityQuestionHistoryHeader = () => {
     return (
       <ModalHeader
-        backgroundColor={Colors.backgroundColor}
-        onPressHeader={() => {
-          SecurityQuestionHistoryBottomSheet.current.snapTo(0);
-        }}
+        backgroundColor={ Colors.backgroundColor }
+        onPressHeader={ () => {
+          SecurityQuestionHistoryBottomSheet.current.snapTo( 0 );
+        } }
       />
     );
   };
@@ -670,25 +670,25 @@ export default function ManageBackup(props) {
   const renderChangeContent = () => {
     return (
       <ErrorModalContents
-        modalRef={ChangeBottomSheet}
-        title={'Change your\nTrusted Contact'}
-        info={'Having problems with your Trusted Contact'}
+        modalRef={ ChangeBottomSheet }
+        title={ 'Change your\nTrusted Contact' }
+        info={ 'Having problems with your Trusted Contact' }
         note={
           'You can change the Trusted Contact you selected to share your Recovery Secret'
         }
-        proceedButtonText={'Change'}
-        cancelButtonText={'Back'}
-        isIgnoreButton={true}
-        onPressProceed={() => {
-          setTimeout(() => {
-            setIsReshare(false);
-          }, 2);
-          (ChangeBottomSheet as any).current.snapTo(0);
-        }}
-        onPressIgnore={() => {
-          (ChangeBottomSheet as any).current.snapTo(0);
-        }}
-        isBottomImage={false}
+        proceedButtonText={ 'Change' }
+        cancelButtonText={ 'Back' }
+        isIgnoreButton={ true }
+        onPressProceed={ () => {
+          setTimeout( () => {
+            setIsReshare( false );
+          }, 2 );
+          ( ChangeBottomSheet as any ).current.snapTo( 0 );
+        } }
+        onPressIgnore={ () => {
+          ( ChangeBottomSheet as any ).current.snapTo( 0 );
+        } }
+        isBottomImage={ false }
       />
     );
   };
@@ -696,9 +696,9 @@ export default function ManageBackup(props) {
   const renderChangeHeader = () => {
     return (
       <ModalHeader
-        onPressHeader={() => {
-          (ChangeBottomSheet as any).current.snapTo(0);
-        }}
+        onPressHeader={ () => {
+          ( ChangeBottomSheet as any ).current.snapTo( 0 );
+        } }
       />
     );
   };
@@ -707,7 +707,7 @@ export default function ManageBackup(props) {
     let title = '';
     let info = '';
     let note = '';
-    if (SelectTypeToReshare == 'secondaryDevice') {
+    if ( SelectTypeToReshare == 'secondaryDevice' ) {
       title = 'Reshare Recovery Secret\nwith Secondary Device';
       info = 'Did your secondary device not receive the Recovery Secret?';
       note = 'You can reshare the Recovery Secret with your \nSecondary Device';
@@ -729,62 +729,62 @@ export default function ManageBackup(props) {
     }
     return (
       <ErrorModalContents
-        modalRef={ReshareBottomSheet}
-        title={title}
-        info={info}
-        note={note}
-        proceedButtonText={'Reshare'}
-        cancelButtonText={'Back'}
-        isIgnoreButton={true}
-        onPressProceed={() => {
+        modalRef={ ReshareBottomSheet }
+        title={ title }
+        info={ info }
+        note={ note }
+        proceedButtonText={ 'Reshare' }
+        cancelButtonText={ 'Back' }
+        isIgnoreButton={ true }
+        onPressProceed={ () => {
           onPressReshare();
-        }}
-        onPressIgnore={() => {
-          (ReshareBottomSheet as any).current.snapTo(0);
-        }}
-        isBottomImage={false}
+        } }
+        onPressIgnore={ () => {
+          ( ReshareBottomSheet as any ).current.snapTo( 0 );
+        } }
+        isBottomImage={ false }
       />
     );
   };
 
   const onPressReshare = () => {
-    setTimeout(() => {
-      setIsReshare(true);
-    }, 2);
-    if (SelectTypeToReshare == 'secondaryDevice') {
+    setTimeout( () => {
+      setIsReshare( true );
+    }, 2 );
+    if ( SelectTypeToReshare == 'secondaryDevice' ) {
       // secondaryDeviceBottomSheet.current.snapTo(1);
-      SecondaryDeviceHistoryBottomSheet.current.snapTo(0);
-    } else if (SelectTypeToReshare == 'contact1') {
-      setTimeout(() => {
-        setChosenContact(contacts[0]);
-        setChosenContactIndex(1);
-      }, 2);
-      CommunicationModeBottomSheet.current.snapTo(1);
-    } else if (SelectTypeToReshare == 'contact2') {
-      setTimeout(() => {
-        setChosenContact(contacts[1]);
-        setChosenContactIndex(2);
-      }, 2);
-      CommunicationModeBottomSheet.current.snapTo(1);
-    } else if (SelectTypeToReshare == 'copy1') {
-      PersonalCopyHistoryBottomSheet.current.snapTo(0);
+      SecondaryDeviceHistoryBottomSheet.current.snapTo( 0 );
+    } else if ( SelectTypeToReshare == 'contact1' ) {
+      setTimeout( () => {
+        setChosenContact( contacts[ 0 ] );
+        setChosenContactIndex( 1 );
+      }, 2 );
+      CommunicationModeBottomSheet.current.snapTo( 1 );
+    } else if ( SelectTypeToReshare == 'contact2' ) {
+      setTimeout( () => {
+        setChosenContact( contacts[ 1 ] );
+        setChosenContactIndex( 2 );
+      }, 2 );
+      CommunicationModeBottomSheet.current.snapTo( 1 );
+    } else if ( SelectTypeToReshare == 'copy1' ) {
+      PersonalCopyHistoryBottomSheet.current.snapTo( 0 );
       // (PersonalCopy1ShareBottomSheet as any).current.snapTo(1);
-    } else if (SelectTypeToReshare == 'copy2') {
-      PersonalCopyHistoryBottomSheet.current.snapTo(0);
+    } else if ( SelectTypeToReshare == 'copy2' ) {
+      PersonalCopyHistoryBottomSheet.current.snapTo( 0 );
       // (PersonalCopy1ShareBottomSheet as any).current.snapTo(1);
-    } else if (SelectTypeToReshare == 'security') {
+    } else if ( SelectTypeToReshare == 'security' ) {
       // SecurityQuestionBottomSheet.current.snapTo(1);
-      SecurityQuestionHistoryBottomSheet.current.snapTo(0);
+      SecurityQuestionHistoryBottomSheet.current.snapTo( 0 );
     }
-    (ReshareBottomSheet as any).current.snapTo(0);
+    ( ReshareBottomSheet as any ).current.snapTo( 0 );
   };
 
   const renderReshareHeader = () => {
     return (
       <ModalHeader
-        onPressHeader={() => {
-          (ReshareBottomSheet as any).current.snapTo(0);
-        }}
+        onPressHeader={ () => {
+          ( ReshareBottomSheet as any ).current.snapTo( 0 );
+        } }
       />
     );
   };
@@ -794,7 +794,7 @@ export default function ManageBackup(props) {
     let info = '';
     let note = '';
     let proceedButtonText = '';
-    if (SelectTypeToReshare == 'secondaryDevice') {
+    if ( SelectTypeToReshare == 'secondaryDevice' ) {
       title = 'Confirm Recovery Secret\nwith Secondary Device';
       info = 'Your Secondary Device seems away from their Hexa App';
       note =
@@ -818,7 +818,7 @@ export default function ManageBackup(props) {
       note =
         'You can send them a reminder to open their app to\nensure they have your Recovery Secret';
       proceedButtonText = 'Confirm';
-    } else if (SelectTypeToReshare == 'security') {
+    } else if ( SelectTypeToReshare == 'security' ) {
       title = 'Confirm Recovery Secret\nwith Security Question';
       info = 'Your Security Question seems away from their Hexa App';
       note =
@@ -827,61 +827,61 @@ export default function ManageBackup(props) {
     }
     return (
       <ErrorModalContents
-        modalRef={ConfirmBottomSheet}
-        title={title}
-        info={info}
-        note={note}
-        proceedButtonText={proceedButtonText}
-        cancelButtonText={'Back'}
-        isIgnoreButton={true}
-        onPressProceed={() => {
+        modalRef={ ConfirmBottomSheet }
+        title={ title }
+        info={ info }
+        note={ note }
+        proceedButtonText={ proceedButtonText }
+        cancelButtonText={ 'Back' }
+        isIgnoreButton={ true }
+        onPressProceed={ () => {
           onPressConfirm();
-        }}
-        onPressIgnore={() => {
-          (ConfirmBottomSheet as any).current.snapTo(0);
-        }}
-        isBottomImage={false}
+        } }
+        onPressIgnore={ () => {
+          ( ConfirmBottomSheet as any ).current.snapTo( 0 );
+        } }
+        isBottomImage={ false }
       />
     );
   };
 
   const onPressConfirm = () => {
-    if (SelectTypeToReshare == 'secondaryDevice') {
-      setSelectedType('');
-      SecondaryDeviceHistoryBottomSheet.current.snapTo(0);
-    } else if (SelectTypeToReshare == 'contact1') {
-      setTimeout(() => {
-        setSelectedType('');
-      }, 2);
-    } else if (SelectTypeToReshare == 'contact2') {
-      setTimeout(() => {
-        setSelectedType('');
-      }, 2);
-    } else if (SelectTypeToReshare == 'copy1') {
-      setTimeout(() => {
-        setLoadCamera(true);
-      }, 2);
-      PersonalCopyHistoryBottomSheet.current.snapTo(0);
-      (PersonalCopyQRScannerBottomSheet as any).current.snapTo(1);
-    } else if (SelectTypeToReshare == 'copy2') {
-      setTimeout(() => {
-        setLoadCamera(true);
-      }, 2);
-      PersonalCopyHistoryBottomSheet.current.snapTo(0);
-      (PersonalCopyQRScannerBottomSheet as any).current.snapTo(1);
-    } else if (SelectTypeToReshare == 'security') {
+    if ( SelectTypeToReshare == 'secondaryDevice' ) {
+      setSelectedType( '' );
+      SecondaryDeviceHistoryBottomSheet.current.snapTo( 0 );
+    } else if ( SelectTypeToReshare == 'contact1' ) {
+      setTimeout( () => {
+        setSelectedType( '' );
+      }, 2 );
+    } else if ( SelectTypeToReshare == 'contact2' ) {
+      setTimeout( () => {
+        setSelectedType( '' );
+      }, 2 );
+    } else if ( SelectTypeToReshare == 'copy1' ) {
+      setTimeout( () => {
+        setLoadCamera( true );
+      }, 2 );
+      PersonalCopyHistoryBottomSheet.current.snapTo( 0 );
+      ( PersonalCopyQRScannerBottomSheet as any ).current.snapTo( 1 );
+    } else if ( SelectTypeToReshare == 'copy2' ) {
+      setTimeout( () => {
+        setLoadCamera( true );
+      }, 2 );
+      PersonalCopyHistoryBottomSheet.current.snapTo( 0 );
+      ( PersonalCopyQRScannerBottomSheet as any ).current.snapTo( 1 );
+    } else if ( SelectTypeToReshare == 'security' ) {
       // SecurityQuestionBottomSheet.current.snapTo(1);
-      SecurityQuestionHistoryBottomSheet.current.snapTo(0);
+      SecurityQuestionHistoryBottomSheet.current.snapTo( 0 );
     }
-    (ConfirmBottomSheet as any).current.snapTo(0);
+    ( ConfirmBottomSheet as any ).current.snapTo( 0 );
   };
 
   const renderConfirmHeader = () => {
     return (
       <ModalHeader
-        onPressHeader={() => {
-          (ConfirmBottomSheet as any).current.snapTo(0);
-        }}
+        onPressHeader={ () => {
+          ( ConfirmBottomSheet as any ).current.snapTo( 0 );
+        } }
       />
     );
   };
@@ -889,24 +889,24 @@ export default function ManageBackup(props) {
   const renderPersonalCopyConfirmModalContent = () => {
     return (
       <CloudHealthCheck
-        LoadCamera={LoadCamera}
-        modalRef={PersonalCopyQRScannerBottomSheet}
-        scannedCode={getScannerData}
-        goPressBack={() => {
-          setTimeout(() => {
-            setLoadCamera(false);
-            setSelectedType('');
-          }, 2);
-          (PersonalCopyQRScannerBottomSheet as any).current.snapTo(0);
-        }}
-        onPressProceed={() => {}}
-        onPressIgnore={() => {
-          setTimeout(() => {
-            setLoadCamera(false);
-            setSelectedType('');
-          }, 2);
-          (PersonalCopyQRScannerBottomSheet as any).current.snapTo(0);
-        }}
+        LoadCamera={ LoadCamera }
+        modalRef={ PersonalCopyQRScannerBottomSheet }
+        scannedCode={ getScannerData }
+        goPressBack={ () => {
+          setTimeout( () => {
+            setLoadCamera( false );
+            setSelectedType( '' );
+          }, 2 );
+          ( PersonalCopyQRScannerBottomSheet as any ).current.snapTo( 0 );
+        } }
+        onPressProceed={ () => { } }
+        onPressIgnore={ () => {
+          setTimeout( () => {
+            setLoadCamera( false );
+            setSelectedType( '' );
+          }, 2 );
+          ( PersonalCopyQRScannerBottomSheet as any ).current.snapTo( 0 );
+        } }
       />
     );
   };
@@ -914,19 +914,19 @@ export default function ManageBackup(props) {
   const renderPersonalCopyConfirmModalHeader = () => {
     return (
       <ModalHeader
-        onPressHeader={() => {
-          setTimeout(() => {
-            setLoadCamera(false);
-            setSelectedType('');
-          }, 2);
-          (PersonalCopyQRScannerBottomSheet as any).current.snapTo(0);
-        }}
+        onPressHeader={ () => {
+          setTimeout( () => {
+            setLoadCamera( false );
+            setSelectedType( '' );
+          }, 2 );
+          ( PersonalCopyQRScannerBottomSheet as any ).current.snapTo( 0 );
+        } }
       />
     );
   };
 
   const getScannerData = data => {
-    console.log('data', data);
+    console.log( 'data', data );
   };
 
   // const removeHighlightingFromCard = () => {
@@ -946,14 +946,14 @@ export default function ManageBackup(props) {
   //   setIsSecretShared2(isSecretShared2);
   // };
 
-  const [autoHighlightFlags, setAutoHighlightFlags] = useState({
+  const [ autoHighlightFlags, setAutoHighlightFlags ] = useState( {
     secondaryDevice: false,
     trustedContact1: false,
     trustedContact2: false,
     personalCopy1: false,
     personalCopy2: false,
     securityAns: false,
-  });
+  } );
 
   const autoHighlight = async () => {
     let {
@@ -965,64 +965,64 @@ export default function ManageBackup(props) {
       securityAns,
     } = autoHighlightFlags;
 
-    console.log('@AutoHighlight');
-    console.log({ autoHighlightFlags });
+    console.log( '@AutoHighlight' );
+    console.log( { autoHighlightFlags } );
 
-    if (!overallHealth) {
-      if (!secondaryDevice) {
-        setSelectedType('secondaryDevice');
-      } else if (!trustedContact1) {
-        setSelectedType('contact1');
-      } else if (!trustedContact2) {
-        setSelectedType('contact2');
-      } else if (!personalCopy1) {
-        setSelectedType('copy1');
-      } else if (!personalCopy2) {
-        setSelectedType('copy2');
-      } else if (!securityAns) {
-        setSelectedType('security');
+    if ( !overallHealth ) {
+      if ( !secondaryDevice ) {
+        setSelectedType( 'secondaryDevice' );
+      } else if ( !trustedContact1 ) {
+        setSelectedType( 'contact1' );
+      } else if ( !trustedContact2 ) {
+        setSelectedType( 'contact2' );
+      } else if ( !personalCopy1 ) {
+        setSelectedType( 'copy1' );
+      } else if ( !personalCopy2 ) {
+        setSelectedType( 'copy2' );
+      } else if ( !securityAns ) {
+        setSelectedType( 'security' );
       }
       return;
     }
 
-    if (!secondaryDevice && !overallHealth.sharesInfo[0].updatedAt) {
-      setSelectedType('secondaryDevice');
-    } else if (!trustedContact1 && !overallHealth.sharesInfo[1].updatedAt) {
-      setSelectedType('contact1');
-    } else if (!trustedContact2 && !overallHealth.sharesInfo[2].updatedAt) {
-      setSelectedType('contact2');
-    } else if (!personalCopy1 && !overallHealth.sharesInfo[3].updatedAt) {
-      setSelectedType('copy1');
-    } else if (!personalCopy2 && !overallHealth.sharesInfo[4].updatedAt) {
-      setSelectedType('copy2');
-    } else if (!securityAns && !overallHealth.qaStatus.updatedAt) {
-      setSelectedType('security');
+    if ( !secondaryDevice && !overallHealth.sharesInfo[ 0 ].updatedAt ) {
+      setSelectedType( 'secondaryDevice' );
+    } else if ( !trustedContact1 && !overallHealth.sharesInfo[ 1 ].updatedAt ) {
+      setSelectedType( 'contact1' );
+    } else if ( !trustedContact2 && !overallHealth.sharesInfo[ 2 ].updatedAt ) {
+      setSelectedType( 'contact2' );
+    } else if ( !personalCopy1 && !overallHealth.sharesInfo[ 3 ].updatedAt ) {
+      setSelectedType( 'copy1' );
+    } else if ( !personalCopy2 && !overallHealth.sharesInfo[ 4 ].updatedAt ) {
+      setSelectedType( 'copy2' );
+    } else if ( !securityAns && !overallHealth.qaStatus.updatedAt ) {
+      setSelectedType( 'security' );
     } else {
-      if (overallHealth) {
-        if (overallHealth.sharesInfo[0].shareStage === 'Ugly') {
-          setSelectedType('secondaryDevice');
-        } else if (overallHealth.sharesInfo[1].shareStage === 'Ugly') {
-          setSelectedType('contact1');
-        } else if (overallHealth.sharesInfo[2].shareStage === 'Ugly') {
-          setSelectedType('contact2');
-        } else if (overallHealth.sharesInfo[3].shareStage === 'Ugly') {
-          setSelectedType('copy1');
-        } else if (overallHealth.sharesInfo[4].shareStage === 'Ugly') {
-          setSelectedType('copy2');
-        } else if (overallHealth.qaStatus.stage === 'Ugly') {
-          setSelectedType('security');
-        } else if (overallHealth.sharesInfo[0].shareStage === 'Bad') {
-          setSelectedType('secondaryDevice');
-        } else if (overallHealth.sharesInfo[1].shareStage === 'Bad') {
-          setSelectedType('contact1');
-        } else if (overallHealth.sharesInfo[2].shareStage === 'Bad') {
-          setSelectedType('contact2');
-        } else if (overallHealth.sharesInfo[3].shareStage === 'Bad') {
-          setSelectedType('copy1');
-        } else if (overallHealth.sharesInfo[4].shareStage === 'Bad') {
-          setSelectedType('copy2');
-        } else if (overallHealth.qaStatus.stage === 'Bad') {
-          setSelectedType('security');
+      if ( overallHealth ) {
+        if ( overallHealth.sharesInfo[ 0 ].shareStage === 'Ugly' ) {
+          setSelectedType( 'secondaryDevice' );
+        } else if ( overallHealth.sharesInfo[ 1 ].shareStage === 'Ugly' ) {
+          setSelectedType( 'contact1' );
+        } else if ( overallHealth.sharesInfo[ 2 ].shareStage === 'Ugly' ) {
+          setSelectedType( 'contact2' );
+        } else if ( overallHealth.sharesInfo[ 3 ].shareStage === 'Ugly' ) {
+          setSelectedType( 'copy1' );
+        } else if ( overallHealth.sharesInfo[ 4 ].shareStage === 'Ugly' ) {
+          setSelectedType( 'copy2' );
+        } else if ( overallHealth.qaStatus.stage === 'Ugly' ) {
+          setSelectedType( 'security' );
+        } else if ( overallHealth.sharesInfo[ 0 ].shareStage === 'Bad' ) {
+          setSelectedType( 'secondaryDevice' );
+        } else if ( overallHealth.sharesInfo[ 1 ].shareStage === 'Bad' ) {
+          setSelectedType( 'contact1' );
+        } else if ( overallHealth.sharesInfo[ 2 ].shareStage === 'Bad' ) {
+          setSelectedType( 'contact2' );
+        } else if ( overallHealth.sharesInfo[ 3 ].shareStage === 'Bad' ) {
+          setSelectedType( 'copy1' );
+        } else if ( overallHealth.sharesInfo[ 4 ].shareStage === 'Bad' ) {
+          setSelectedType( 'copy2' );
+        } else if ( overallHealth.qaStatus.stage === 'Bad' ) {
+          setSelectedType( 'security' );
         }
       }
     }
@@ -1032,34 +1032,34 @@ export default function ManageBackup(props) {
 
   const setContactsFromAsync = async () => {
     let contactList = JSON.parse(
-      await AsyncStorage.getItem('SelectedContacts'),
+      await AsyncStorage.getItem( 'SelectedContacts' ),
     );
-    setContacts(contactList);
-    if (contactList.length) {
+    setContacts( contactList );
+    if ( contactList.length ) {
       if (
-        contactList.findIndex(value => value && value.type == 'contact1') != -1
+        contactList.findIndex( value => value && value.type == 'contact1' ) != -1
       ) {
-        pageData[1].personalInfo =
+        pageData[ 1 ].personalInfo =
           contactList[
-            contactList.findIndex(value => value && value.type == 'contact1')
+          contactList.findIndex( value => value && value.type == 'contact1' )
           ];
       }
       if (
-        contactList.findIndex(value => value && value.type == 'contact2') != -1
+        contactList.findIndex( value => value && value.type == 'contact2' ) != -1
       ) {
-        pageData[2].personalInfo =
+        pageData[ 2 ].personalInfo =
           contactList[
-            contactList.findIndex(value => value && value.type == 'contact2')
+          contactList.findIndex( value => value && value.type == 'contact2' )
           ];
       }
     }
-    setPageData([...pageData]);
+    //setPageData( [ ...pageData ] ); demo
   };
 
   const setAutoHighlightFlagsFromAsync = async () => {
-    const highlightFlags = await AsyncStorage.getItem('AutoHighlightFlags');
-    if (highlightFlags) {
-      setAutoHighlightFlags(JSON.parse(highlightFlags));
+    const highlightFlags = await AsyncStorage.getItem( 'AutoHighlightFlags' );
+    if ( highlightFlags ) {
+      setAutoHighlightFlags( JSON.parse( highlightFlags ) );
     } else {
       const autoHighlightFlags = {
         secondaryDevice: false,
@@ -1069,38 +1069,38 @@ export default function ManageBackup(props) {
         personalCopy2: false,
         securityAns: true, // due to auto-health (during initialization)
       };
-      setAutoHighlightFlags(autoHighlightFlags);
+      setAutoHighlightFlags( autoHighlightFlags );
       await AsyncStorage.setItem(
         'AutoHighlightFlags',
-        JSON.stringify(autoHighlightFlags),
+        JSON.stringify( autoHighlightFlags ),
       );
     }
   };
 
-  useEffect(() => {
-    let focusListener = props.navigation.addListener('didFocus', () => {
+  useEffect( () => {
+    let focusListener = props.navigation.addListener( 'didFocus', () => {
       setContactsFromAsync();
       // setAutoHighlightFlagsFromAsync();
-    });
+    } );
     return () => {
       focusListener.remove();
     };
-  }, []);
+  }, [] );
 
-  useEffect(() => {
+  useEffect( () => {
     // setContactsFromAsync();
     setAutoHighlightFlagsFromAsync();
-  }, []);
+  }, [] );
 
-  useEffect(() => {
-    if (autoHighlightFlags) {
+  useEffect( () => {
+    if ( autoHighlightFlags ) {
       autoHighlight();
       AsyncStorage.setItem(
         'AutoHighlightFlags',
-        JSON.stringify(autoHighlightFlags),
+        JSON.stringify( autoHighlightFlags ),
       );
     }
-  }, [autoHighlightFlags, , overallHealth]);
+  }, [ autoHighlightFlags, , overallHealth ] );
 
   // useEffect(() => {
   //   if (overallHealth) {
@@ -1158,7 +1158,7 @@ export default function ManageBackup(props) {
   //   setSecurityAutoHighlightFlags(securityAutoHighlightFlags);
   // };
 
-  useEffect(() => {
+  useEffect( () => {
     // (async () => {
     //   await setSetupFlowAsync();
     //   console.log('Executing autoHighlight');
@@ -1173,10 +1173,10 @@ export default function ManageBackup(props) {
     //     dispatch(checkMSharesHealth());
     //   }
     // }
-    dispatch(fetchSSSFromDB());
+    dispatch( fetchSSSFromDB() );
     // if (!s3Service.sss.healthCheckInitialized) dispatch(initHealthCheck());
     checkNShowHelperModal();
-  }, []);
+  }, [] );
 
   // const getOverAllHealth = async () => {
   //   const storedHealth = await AsyncStorage.getItem('overallHealth');
@@ -1185,73 +1185,74 @@ export default function ManageBackup(props) {
   //   }
   // };
 
-  useEffect(() => {
-    (async () => {
-      const storedHealth = await AsyncStorage.getItem('overallHealth');
-      if (storedHealth) {
-        setOverallHealth(JSON.parse(storedHealth));
+  useEffect( () => {
+    ( async () => {
+      const storedHealth = await AsyncStorage.getItem( 'overallHealth' );
+      if ( storedHealth ) {
+        setOverallHealth( JSON.parse( storedHealth ) );
       }
-    })();
-  }, []);
+    } )();
+  }, [] );
 
-  useEffect(() => {
-    if (health) setOverallHealth(health);
-  }, [health]);
+  useEffect( () => {
+    if ( health ) setOverallHealth( health );
+  }, [ health ] );
 
-  useEffect(() => {
-    if (overallHealth) {
-      setIsNextStepDisable(false);
-      const updatedPageData = [...pageData];
-      updatedPageData.forEach(data => {
-        switch (data.title) {
-          case 'Secondary Device':
-            data.status = overallHealth.sharesInfo[0].shareStage;
-            data.time = overallHealth.sharesInfo[0].updatedAt;
-            break;
+  // demo 
+  // useEffect( () => {
+  //   if ( overallHealth ) {
+  //     setIsNextStepDisable( false );
+  //     const updatedPageData = [ ...pageData ];
+  //     updatedPageData.forEach( data => {
+  //       switch ( data.title ) {
+  //         case 'Secondary Device':
+  //           data.status = overallHealth.sharesInfo[ 0 ].shareStage;
+  //           data.time = overallHealth.sharesInfo[ 0 ].updatedAt;
+  //           break;
 
-          case 'Trusted Contact 1':
-            data.status = overallHealth.sharesInfo[1].shareStage;
-            data.time = overallHealth.sharesInfo[1].updatedAt;
-            break;
+  //         case 'Trusted Contact 1':
+  //           data.status = overallHealth.sharesInfo[ 1 ].shareStage;
+  //           data.time = overallHealth.sharesInfo[ 1 ].updatedAt;
+  //           break;
 
-          case 'Trusted Contact 2':
-            data.status = overallHealth.sharesInfo[2].shareStage;
-            data.time = overallHealth.sharesInfo[2].updatedAt;
-            break;
+  //         case 'Trusted Contact 2':
+  //           data.status = overallHealth.sharesInfo[ 2 ].shareStage;
+  //           data.time = overallHealth.sharesInfo[ 2 ].updatedAt;
+  //           break;
 
-          case 'Personal Copy 1':
-            data.status = overallHealth.sharesInfo[3].shareStage;
-            data.time = overallHealth.sharesInfo[3].updatedAt;
-            break;
+  //         case 'Personal Copy 1':
+  //           data.status = overallHealth.sharesInfo[ 3 ].shareStage;
+  //           data.time = overallHealth.sharesInfo[ 3 ].updatedAt;
+  //           break;
 
-          case 'Personal Copy 2':
-            data.status = overallHealth.sharesInfo[4].shareStage;
-            data.time = overallHealth.sharesInfo[4].updatedAt;
-            break;
+  //         case 'Personal Copy 2':
+  //           data.status = overallHealth.sharesInfo[ 4 ].shareStage;
+  //           data.time = overallHealth.sharesInfo[ 4 ].updatedAt;
+  //           break;
 
-          case 'Security Questions':
-            data.status = overallHealth.qaStatus.stage;
-            data.time = overallHealth.qaStatus.updatedAt;
-            break;
+  //         case 'Security Questions':
+  //           data.status = overallHealth.qaStatus.stage;
+  //           data.time = overallHealth.qaStatus.updatedAt;
+  //           break;
 
-          default:
-            break;
-        }
-      });
-      setPageData(updatedPageData);
-      // autoHighlightOptions();
-    }
-  }, [overallHealth]);
+  //         default:
+  //           break;
+  //       }
+  //     } );
+  //     //setPageData( updatedPageData );  demo
+  //     // autoHighlightOptions();
+  //   }
+  // }, [ overallHealth ] );
 
   const checkNShowHelperModal = async () => {
     let isManageBackupHelperDone = await AsyncStorage.getItem(
       'isManageBackupHelperDone',
     );
-    if (!isManageBackupHelperDone) {
-      await AsyncStorage.setItem('isManageBackupHelperDone', 'true');
-      setTimeout(() => {
-        WalletBackupAndRecoveryBottomSheet.current.snapTo(1);
-      }, 1000);
+    if ( !isManageBackupHelperDone ) {
+      await AsyncStorage.setItem( 'isManageBackupHelperDone', 'true' );
+      setTimeout( () => {
+        WalletBackupAndRecoveryBottomSheet.current.snapTo( 1 );
+      }, 1000 );
     }
   };
 
@@ -1436,149 +1437,149 @@ export default function ManageBackup(props) {
       securityAns,
     } = autoHighlightFlags;
 
-    if (!secondaryDevice && !overallHealth.sharesInfo[0].updatedAt) {
-      const data = pageData[0];
+    if ( !secondaryDevice && !overallHealth.sharesInfo[ 0 ].updatedAt ) {
+      const data = pageData[ 0 ];
       // secondaryDeviceBottomSheet.current.snapTo(1);
-      props.navigation.navigate('SecondaryDeviceHistory', {
+      props.navigation.navigate( 'SecondaryDeviceHistory', {
         selectedStatus: data.status,
-        selectedTime: getTime(data.time),
+        selectedTime: getTime( data.time ),
         selectedTitle: data.title,
         updateAutoHighlightFlags: () =>
-          setAutoHighlightFlags({
+          setAutoHighlightFlags( {
             ...autoHighlightFlags,
             secondaryDevice: true,
-          }),
+          } ),
         next: 'true',
-      });
-    } else if (!trustedContact1 && !overallHealth.sharesInfo[1].updatedAt) {
-      props.navigation.navigate('TrustedContactHistory', {
-        selectedStatus: pageData[1].status,
-        selectedTime: getTime(pageData[1].time),
-        selectedTitle: pageData[1].title,
+      } );
+    } else if ( !trustedContact1 && !overallHealth.sharesInfo[ 1 ].updatedAt ) {
+      props.navigation.navigate( 'TrustedContactHistory', {
+        selectedStatus: pageData[ 1 ].status,
+        selectedTime: getTime( pageData[ 1 ].time ),
+        selectedTitle: pageData[ 1 ].title,
         updateAutoHighlightFlags: () =>
-          setAutoHighlightFlags({
+          setAutoHighlightFlags( {
             ...autoHighlightFlags,
             trustedContact1: true,
-          }),
+          } ),
         activateReshare: autoHighlightFlags.trustedContact1,
         next: 'true',
-      });
-    } else if (!trustedContact2 && !overallHealth.sharesInfo[2].updatedAt) {
-      props.navigation.navigate('TrustedContactHistory', {
-        selectedStatus: pageData[2].status,
-        selectedTime: getTime(pageData[2].time),
-        selectedTitle: pageData[2].title,
+      } );
+    } else if ( !trustedContact2 && !overallHealth.sharesInfo[ 2 ].updatedAt ) {
+      props.navigation.navigate( 'TrustedContactHistory', {
+        selectedStatus: pageData[ 2 ].status,
+        selectedTime: getTime( pageData[ 2 ].time ),
+        selectedTitle: pageData[ 2 ].title,
         updateAutoHighlightFlags: () =>
-          setAutoHighlightFlags({
+          setAutoHighlightFlags( {
             ...autoHighlightFlags,
             trustedContact2: true,
-          }),
+          } ),
         activateReshare: autoHighlightFlags.trustedContact2,
         next: 'true',
-      });
-    } else if (!personalCopy1 && !overallHealth.sharesInfo[3].updatedAt) {
+      } );
+    } else if ( !personalCopy1 && !overallHealth.sharesInfo[ 3 ].updatedAt ) {
       // (PersonalCopy1ShareBottomSheet as any).current.snapTo(1);
-      const data = pageData[3];
-      props.navigation.navigate('PersonalCopyHistory', {
+      const data = pageData[ 3 ];
+      props.navigation.navigate( 'PersonalCopyHistory', {
         selectedStatus: data.status,
-        selectedTime: getTime(data.time),
+        selectedTime: getTime( data.time ),
         selectedTitle: data.title,
         selectedPersonalCopy: data,
         updateAutoHighlightFlags: () =>
-          setAutoHighlightFlags({
+          setAutoHighlightFlags( {
             ...autoHighlightFlags,
             personalCopy1: true,
-          }),
+          } ),
         next: 'true',
-      });
-    } else if (!personalCopy2 && !overallHealth.sharesInfo[4].updatedAt) {
+      } );
+    } else if ( !personalCopy2 && !overallHealth.sharesInfo[ 4 ].updatedAt ) {
       // (PersonalCopy2ShareBottomSheet as any).current.snapTo(1);
-      const data = pageData[4];
-      props.navigation.navigate('PersonalCopyHistory', {
+      const data = pageData[ 4 ];
+      props.navigation.navigate( 'PersonalCopyHistory', {
         selectedStatus: data.status,
-        selectedTime: getTime(data.time),
+        selectedTime: getTime( data.time ),
         selectedTitle: data.title,
         selectedPersonalCopy: data,
         updateAutoHighlightFlags: () =>
-          setAutoHighlightFlags({
+          setAutoHighlightFlags( {
             ...autoHighlightFlags,
             personalCopy2: true,
-          }),
+          } ),
         next: 'true',
-      });
-    } else if (!securityAns && !overallHealth.qaStatus.updatedAt) {
-      const data = pageData[5];
-      props.navigation.navigate('SecurityQuestionHistory', {
+      } );
+    } else if ( !securityAns && !overallHealth.qaStatus.updatedAt ) {
+      const data = pageData[ 5 ];
+      props.navigation.navigate( 'SecurityQuestionHistory', {
         selectedStatus: data.status,
-        selectedTime: getTime(data.time),
+        selectedTime: getTime( data.time ),
         selectedTitle: data.title,
         updateAutoHighlightFlags: () =>
-          setAutoHighlightFlags({
+          setAutoHighlightFlags( {
             ...autoHighlightFlags,
             securityAns: true,
-          }),
+          } ),
         next: 'true',
-      });
+      } );
     } else {
-      if (overallHealth) {
-        if (overallHealth.sharesInfo[0].shareStage === 'Ugly') {
+      if ( overallHealth ) {
+        if ( overallHealth.sharesInfo[ 0 ].shareStage === 'Ugly' ) {
           // Secondary device
           // ConfirmBottomSheet.current.snapTo(1);
           // secondaryDeviceBottomSheet.current.snapTo(1);
-          const data = pageData[0];
+          const data = pageData[ 0 ];
           // secondaryDeviceBottomSheet.current.snapTo(1);
-          props.navigation.navigate('SecondaryDeviceHistory', {
+          props.navigation.navigate( 'SecondaryDeviceHistory', {
             selectedStatus: data.status,
-            selectedTime: getTime(data.time),
+            selectedTime: getTime( data.time ),
             selectedTitle: data.title,
             updateAutoHighlightFlags: () =>
-              setAutoHighlightFlags({
+              setAutoHighlightFlags( {
                 ...autoHighlightFlags,
                 secondaryDevice: true,
-              }),
+              } ),
             next: 'true',
-          });
-        } else if (overallHealth.sharesInfo[1].shareStage === 'Ugly') {
+          } );
+        } else if ( overallHealth.sharesInfo[ 1 ].shareStage === 'Ugly' ) {
           // setSelectedTime(getTime(pageData[1].time));
           // setSelectedStatus(pageData[1].status);
           // setSelectTypeToReshare('contact1');
           // //Trusted contact 1
           // // ConfirmBottomSheet.current.snapTo(1);
           // setTimeout(() => {}, 10);
-          props.navigation.navigate('TrustedContactHistory', {
-            selectedStatus: pageData[1].status,
-            selectedTime: getTime(pageData[1].time),
-            selectedTitle: pageData[1].title,
+          props.navigation.navigate( 'TrustedContactHistory', {
+            selectedStatus: pageData[ 1 ].status,
+            selectedTime: getTime( pageData[ 1 ].time ),
+            selectedTitle: pageData[ 1 ].title,
             isConfirm: true,
             updateAutoHighlightFlags: () =>
-              setAutoHighlightFlags({
+              setAutoHighlightFlags( {
                 ...autoHighlightFlags,
                 trustedContact1: true,
-              }),
+              } ),
             activateReshare: autoHighlightFlags.trustedContact1,
             next: 'true',
-          });
-        } else if (overallHealth.sharesInfo[2].shareStage === 'Ugly') {
+          } );
+        } else if ( overallHealth.sharesInfo[ 2 ].shareStage === 'Ugly' ) {
           // setSelectedTime(getTime(pageData[2].time));
           // setSelectedStatus(pageData[2].status);
           // setSelectTypeToReshare('contact2');
           // //Trusted contact 2
           // // ConfirmBottomSheet.current.snapTo(1);
           // setTimeout(() => {}, 10);
-          props.navigation.navigate('TrustedContactHistory', {
-            selectedStatus: pageData[2].status,
-            selectedTime: getTime(pageData[2].time),
-            selectedTitle: pageData[2].title,
+          props.navigation.navigate( 'TrustedContactHistory', {
+            selectedStatus: pageData[ 2 ].status,
+            selectedTime: getTime( pageData[ 2 ].time ),
+            selectedTitle: pageData[ 2 ].title,
             isConfirm: true,
             updateAutoHighlightFlags: () =>
-              setAutoHighlightFlags({
+              setAutoHighlightFlags( {
                 ...autoHighlightFlags,
                 trustedContact2: true,
-              }),
+              } ),
             activateReshare: autoHighlightFlags.trustedContact2,
             next: 'true',
-          });
-        } else if (overallHealth.sharesInfo[3].shareStage === 'Ugly') {
+          } );
+        } else if ( overallHealth.sharesInfo[ 3 ].shareStage === 'Ugly' ) {
           // setSelectedTime(getTime(pageData[3].time));
           // setSelectedStatus(pageData[3].status);
           // setSelectTypeToReshare('copy1');
@@ -1588,20 +1589,20 @@ export default function ManageBackup(props) {
           // }, 2);
           // ConfirmBottomSheet.current.snapTo(1);
           // (PersonalCopy1ShareBottomSheet as any).current.snapTo(1);
-          const data = pageData[3];
-          props.navigation.navigate('PersonalCopyHistory', {
+          const data = pageData[ 3 ];
+          props.navigation.navigate( 'PersonalCopyHistory', {
             selectedStatus: data.status,
-            selectedTime: getTime(data.time),
+            selectedTime: getTime( data.time ),
             selectedTitle: data.title,
             selectedPersonalCopy: data,
             updateAutoHighlightFlags: () =>
-              setAutoHighlightFlags({
+              setAutoHighlightFlags( {
                 ...autoHighlightFlags,
                 personalCopy1: true,
-              }),
+              } ),
             next: 'true',
-          });
-        } else if (overallHealth.sharesInfo[4].shareStage === 'Ugly') {
+          } );
+        } else if ( overallHealth.sharesInfo[ 4 ].shareStage === 'Ugly' ) {
           // setSelectedTime(getTime(pageData[4].time));
           // setSelectedStatus(pageData[4].status);
           // setSelectTypeToReshare('copy2');
@@ -1611,97 +1612,97 @@ export default function ManageBackup(props) {
           // }, 2);
           // ConfirmBottomSheet.current.snapTo(1);
           // (PersonalCopy2ShareBottomSheet as any).current.snapTo(1);
-          const data = pageData[4];
-          props.navigation.navigate('PersonalCopyHistory', {
+          const data = pageData[ 4 ];
+          props.navigation.navigate( 'PersonalCopyHistory', {
             selectedStatus: data.status,
-            selectedTime: getTime(data.time),
+            selectedTime: getTime( data.time ),
             selectedTitle: data.title,
             selectedPersonalCopy: data,
             updateAutoHighlightFlags: () =>
-              setAutoHighlightFlags({
+              setAutoHighlightFlags( {
                 ...autoHighlightFlags,
                 personalCopy2: true,
-              }),
+              } ),
             next: 'true',
-          });
-        } else if (overallHealth.qaStatus.stage === 'Ugly') {
-          setSelectedTime(getTime(pageData[5].time));
-          setSelectedStatus(pageData[5].status);
-          setSelectTypeToReshare('security');
+          } );
+        } else if ( overallHealth.qaStatus.stage === 'Ugly' ) {
+          setSelectedTime( getTime( pageData[ 5 ].time ) );
+          setSelectedStatus( pageData[ 5 ].status );
+          setSelectTypeToReshare( 'security' );
           // Security question
           // SecurityQuestionBottomSheet.current.snapTo(1);
-          const data = pageData[5];
-          props.navigation.navigate('SecurityQuestionHistory', {
+          const data = pageData[ 5 ];
+          props.navigation.navigate( 'SecurityQuestionHistory', {
             selectedStatus: data.status,
-            selectedTime: getTime(data.time),
+            selectedTime: getTime( data.time ),
             selectedTitle: data.title,
             updateAutoHighlightFlags: () =>
-              setAutoHighlightFlags({
+              setAutoHighlightFlags( {
                 ...autoHighlightFlags,
                 securityAns: true,
-              }),
+              } ),
             next: 'true',
-          });
-        } else if (overallHealth.sharesInfo[0].shareStage === 'Bad') {
+          } );
+        } else if ( overallHealth.sharesInfo[ 0 ].shareStage === 'Bad' ) {
           // Secondary device
           // SecondaryDeviceHistoryBottomSheet.current.snapTo(1);
           // secondaryDeviceBottomSheet.current.snapTo(1);
-          const data = pageData[0];
+          const data = pageData[ 0 ];
           // secondaryDeviceBottomSheet.current.snapTo(1);
-          props.navigation.navigate('SecondaryDeviceHistory', {
+          props.navigation.navigate( 'SecondaryDeviceHistory', {
             selectedStatus: data.status,
-            selectedTime: getTime(data.time),
+            selectedTime: getTime( data.time ),
             selectedTitle: data.title,
             updateAutoHighlightFlags: () =>
-              setAutoHighlightFlags({
+              setAutoHighlightFlags( {
                 ...autoHighlightFlags,
                 secondaryDevice: true,
-              }),
+              } ),
             next: 'true',
-          });
-        } else if (overallHealth.sharesInfo[1].shareStage === 'Bad') {
+          } );
+        } else if ( overallHealth.sharesInfo[ 1 ].shareStage === 'Bad' ) {
           // setSelectedTime(getTime(pageData[1].time));
           // setSelectedStatus(pageData[1].status);
           // setSelectTypeToReshare('contact1');
           //Trusted contact 1
           // ConfirmBottomSheet.current.snapTo(1);
-          props.navigation.navigate('TrustedContactHistory', {
-            selectedStatus: pageData[1].status,
-            selectedTime: getTime(pageData[1].time),
-            selectedTitle: pageData[1].title,
+          props.navigation.navigate( 'TrustedContactHistory', {
+            selectedStatus: pageData[ 1 ].status,
+            selectedTime: getTime( pageData[ 1 ].time ),
+            selectedTitle: pageData[ 1 ].title,
             isConfirm: true,
             updateAutoHighlightFlags: () =>
-              setAutoHighlightFlags({
+              setAutoHighlightFlags( {
                 ...autoHighlightFlags,
                 trustedContact1: true,
-              }),
+              } ),
             activateReshare: autoHighlightFlags.trustedContact1,
             next: 'true',
-          });
+          } );
 
-          setTimeout(() => {}, 10);
-        } else if (overallHealth.sharesInfo[2].shareStage === 'Bad') {
+          setTimeout( () => { }, 10 );
+        } else if ( overallHealth.sharesInfo[ 2 ].shareStage === 'Bad' ) {
           // setSelectedTime(getTime(pageData[2].time));
           // setSelectedStatus(pageData[2].status);
           // setSelectTypeToReshare('contact2');
           //Trusted contact 2
           // ConfirmBottomSheet.current.snapTo(1);
-          props.navigation.navigate('TrustedContactHistory', {
-            selectedStatus: pageData[2].status,
-            selectedTime: getTime(pageData[2].time),
-            selectedTitle: pageData[2].title,
+          props.navigation.navigate( 'TrustedContactHistory', {
+            selectedStatus: pageData[ 2 ].status,
+            selectedTime: getTime( pageData[ 2 ].time ),
+            selectedTitle: pageData[ 2 ].title,
             isConfirm: true,
             updateAutoHighlightFlags: () =>
-              setAutoHighlightFlags({
+              setAutoHighlightFlags( {
                 ...autoHighlightFlags,
                 trustedContact2: true,
-              }),
+              } ),
             activateReshare: autoHighlightFlags.trustedContact2,
             next: 'true',
-          });
+          } );
 
-          setTimeout(() => {}, 10);
-        } else if (overallHealth.sharesInfo[3].shareStage === 'Bad') {
+          setTimeout( () => { }, 10 );
+        } else if ( overallHealth.sharesInfo[ 3 ].shareStage === 'Bad' ) {
           // setSelectedTime(getTime(pageData[3].time));
           // setSelectedStatus(pageData[3].status);
           // setSelectTypeToReshare('copy1');
@@ -1711,20 +1712,20 @@ export default function ManageBackup(props) {
           // }, 2);
           // ConfirmBottomSheet.current.snapTo(1);
           // (PersonalCopy1ShareBottomSheet as any).current.snapTo(1);
-          const data = pageData[3];
-          props.navigation.navigate('PersonalCopyHistory', {
+          const data = pageData[ 3 ];
+          props.navigation.navigate( 'PersonalCopyHistory', {
             selectedStatus: data.status,
-            selectedTime: getTime(data.time),
+            selectedTime: getTime( data.time ),
             selectedTitle: data.title,
             selectedPersonalCopy: data,
             updateAutoHighlightFlags: () =>
-              setAutoHighlightFlags({
+              setAutoHighlightFlags( {
                 ...autoHighlightFlags,
                 personalCopy1: true,
-              }),
+              } ),
             next: 'true',
-          });
-        } else if (overallHealth.sharesInfo[4].shareStage === 'Bad') {
+          } );
+        } else if ( overallHealth.sharesInfo[ 4 ].shareStage === 'Bad' ) {
           // setSelectedTime(getTime(pageData[4].time));
           // setSelectedStatus(pageData[4].status);
           // setSelectTypeToReshare('copy2');
@@ -1734,34 +1735,34 @@ export default function ManageBackup(props) {
           // }, 2);
           // ConfirmBottomSheet.current.snapTo(1);
           // (PersonalCopy2ShareBottomSheet as any).current.snapTo(1);
-          const data = pageData[4];
-          props.navigation.navigate('PersonalCopyHistory', {
+          const data = pageData[ 4 ];
+          props.navigation.navigate( 'PersonalCopyHistory', {
             selectedStatus: data.status,
-            selectedTime: getTime(data.time),
+            selectedTime: getTime( data.time ),
             selectedTitle: data.title,
             selectedPersonalCopy: data,
             updateAutoHighlightFlags: () =>
-              setAutoHighlightFlags({
+              setAutoHighlightFlags( {
                 ...autoHighlightFlags,
                 personalCopy2: true,
-              }),
+              } ),
             next: 'true',
-          });
-        } else if (overallHealth.qaStatus.stage === 'Bad') {
+          } );
+        } else if ( overallHealth.qaStatus.stage === 'Bad' ) {
           // Security question
           // SecurityQuestionBottomSheet.current.snapTo(1);
-          const data = pageData[5];
-          props.navigation.navigate('SecurityQuestionHistory', {
+          const data = pageData[ 5 ];
+          props.navigation.navigate( 'SecurityQuestionHistory', {
             selectedStatus: data.status,
-            selectedTime: getTime(data.time),
+            selectedTime: getTime( data.time ),
             selectedTitle: data.title,
             updateAutoHighlightFlags: () =>
-              setAutoHighlightFlags({
+              setAutoHighlightFlags( {
                 ...autoHighlightFlags,
                 securityAns: true,
-              }),
+              } ),
             next: 'true',
-          });
+          } );
         }
       }
     }
@@ -1782,215 +1783,215 @@ export default function ManageBackup(props) {
   //   }
   // }, [databaseSSS]);
 
-  useEffect(() => {
+  useEffect( () => {
     onContactsUpdate();
-  }, [contacts]);
+  }, [ contacts ] );
 
   const onContactsUpdate = async () => {
-    if (contacts.length) {
+    if ( contacts.length ) {
       if (
-        contacts.findIndex(value => value && value.type == 'contact1') != -1
+        contacts.findIndex( value => value && value.type == 'contact1' ) != -1
       ) {
-        pageData[1].personalInfo =
+        pageData[ 1 ].personalInfo =
           contacts[
-            contacts.findIndex(value => value && value.type == 'contact1')
+          contacts.findIndex( value => value && value.type == 'contact1' )
           ];
       }
       if (
-        contacts.findIndex(value => value && value.type == 'contact2') != -1
+        contacts.findIndex( value => value && value.type == 'contact2' ) != -1
       ) {
-        pageData[2].personalInfo =
+        pageData[ 2 ].personalInfo =
           contacts[
-            contacts.findIndex(value => value && value.type == 'contact2')
+          contacts.findIndex( value => value && value.type == 'contact2' )
           ];
       }
     }
-    setPageData(pageData);
+    //setPageData( pageData ); demo
   };
 
   const getTime = item => {
-    return (item.toString() && item.toString() == '0') ||
+    return ( item.toString() && item.toString() == '0' ) ||
       item.toString() == 'never'
       ? 'never'
-      : timeFormatter(moment(new Date()), item);
+      : timeFormatter( moment( new Date() ), item );
   };
 
-  useEffect(() => {
+  useEffect( () => {
     // HC init and down-streaming
-    if (s3Service) {
+    if ( s3Service ) {
       const { healthCheckInitialized } = s3Service.sss;
-      if (healthCheckInitialized) {
-        console.log({ healthCheckInitialized });
-        dispatch(checkMSharesHealth());
+      if ( healthCheckInitialized ) {
+        console.log( { healthCheckInitialized } );
+        dispatch( checkMSharesHealth() );
       } else {
-        console.log({ healthCheckInitialized });
+        console.log( { healthCheckInitialized } );
 
-        dispatch(initHealthCheck());
+        dispatch( initHealthCheck() );
       }
     }
-  }, [s3Service]);
+  }, [ s3Service ] );
 
   const getStatusIcon = item => {
-    if (item.type == 'secondaryDevice' && autoHighlightFlags.secondaryDevice) {
-      return getIconByStatus(item.status);
+    if ( item.type == 'secondaryDevice' && autoHighlightFlags.secondaryDevice ) {
+      return getIconByStatus( item.status );
     }
-    if (item.type == 'contact1' && autoHighlightFlags.trustedContact1) {
-      return getIconByStatus(item.status);
+    if ( item.type == 'contact1' && autoHighlightFlags.trustedContact1 ) {
+      return getIconByStatus( item.status );
     }
-    if (item.type == 'contact2' && autoHighlightFlags.trustedContact2) {
-      return getIconByStatus(item.status);
+    if ( item.type == 'contact2' && autoHighlightFlags.trustedContact2 ) {
+      return getIconByStatus( item.status );
     }
-    if (item.type == 'copy1' && autoHighlightFlags.personalCopy1) {
-      return getIconByStatus(item.status);
+    if ( item.type == 'copy1' && autoHighlightFlags.personalCopy1 ) {
+      return getIconByStatus( item.status );
     }
-    if (item.type == 'copy2' && autoHighlightFlags.personalCopy2) {
-      return getIconByStatus(item.status);
+    if ( item.type == 'copy2' && autoHighlightFlags.personalCopy2 ) {
+      return getIconByStatus( item.status );
     }
-    if (item.type == 'security' && autoHighlightFlags.securityAns) {
-      return getIconByStatus(item.status);
+    if ( item.type == 'security' && autoHighlightFlags.securityAns ) {
+      return getIconByStatus( item.status );
     }
-    return require('../../assets/images/icons/settings.png');
+    return require( '../../assets/images/icons/settings.png' );
   };
 
   const getImageIcon = item => {
-    if (item.type == 'contact1' || item.type == 'contact2') {
-      if (item.personalInfo) {
-        if (item.personalInfo.imageAvailable) {
+    if ( item.type == 'contact1' || item.type == 'contact2' ) {
+      if ( item.personalInfo ) {
+        if ( item.personalInfo.imageAvailable ) {
           return (
             <Image
-              source={item.personalInfo.image}
-              style={{
+              source={ item.personalInfo.image }
+              style={ {
                 width: 35,
                 height: 35,
                 borderRadius: 35 / 2,
                 resizeMode: 'contain',
-              }}
+              } }
             />
           );
         } else {
           return (
             <View
-              style={{
+              style={ {
                 alignItems: 'center',
                 justifyContent: 'center',
                 backgroundColor: Colors.shadowBlue,
                 width: 35,
                 height: 35,
                 borderRadius: 30,
-              }}
+              } }
             >
               <Text
-                style={{
+                style={ {
                   textAlign: 'center',
                   fontSize: 13,
                   lineHeight: 13, //... One for top and one for bottom alignment
-                }}
+                } }
               >
-                {item.personalInfo && item.personalInfo.name
-                  ? nameToInitials(item.personalInfo.name)
-                  : ''}
+                { item.personalInfo && item.personalInfo.name
+                  ? nameToInitials( item.personalInfo.name )
+                  : '' }
               </Text>
             </View>
           );
         }
       }
     }
-    return <Image style={styles.cardImage} source={getImageByType(item)} />;
+    return <Image style={ styles.cardImage } source={ getImageByType( item ) } />;
   };
 
   return (
-    <View style={{ flex: 1 }}>
-      <SafeAreaView style={{ flex: 0 }} />
-      <StatusBar backgroundColor={Colors.white} barStyle="dark-content" />
-      <View style={{ flex: 1, position: 'relative' }}>
-        <View style={CommonStyles.headerContainer}>
+    <View style={ { flex: 1 } }>
+      <SafeAreaView style={ { flex: 0 } } />
+      <StatusBar backgroundColor={ Colors.white } barStyle="dark-content" />
+      <View style={ { flex: 1, position: 'relative' } }>
+        <View style={ CommonStyles.headerContainer }>
           <TouchableOpacity
-            style={CommonStyles.headerLeftIconContainer}
-            onPress={() => {
+            style={ CommonStyles.headerLeftIconContainer }
+            onPress={ () => {
               props.navigation.goBack();
-            }}
+            } }
           >
-            <View style={CommonStyles.headerLeftIconInnerContainer}>
+            <View style={ CommonStyles.headerLeftIconInnerContainer }>
               <FontAwesome
                 name="long-arrow-left"
-                color={Colors.blue}
-                size={17}
+                color={ Colors.blue }
+                size={ 17 }
               />
             </View>
           </TouchableOpacity>
           <TouchableOpacity
-            style={{
+            style={ {
               marginLeft: 'auto',
               marginRight: 10,
               padding: 10,
-            }}
-            activeOpacity={1}
-            // onPress={() => {
-            //   RegenerateShareHelperBottomSheet.current.snapTo(1);
-            // }}
+            } }
+            activeOpacity={ 1 }
+          // onPress={() => {
+          //   RegenerateShareHelperBottomSheet.current.snapTo(1);
+          // }}
           >
             <Image
-              source={require('../../assets/images/icons/icon_settings1.png')}
-              style={{
-                width: wp('5%'),
-                height: wp('5%'),
+              source={ require( '../../assets/images/icons/icon_settings1.png' ) }
+              style={ {
+                width: wp( '5%' ),
+                height: wp( '5%' ),
                 resizeMode: 'contain',
-              }}
+              } }
             />
           </TouchableOpacity>
         </View>
         <ScrollView
           refreshControl={
             <RefreshControl
-              refreshing={healthLoading}
-              onRefresh={() => {
-                dispatch(checkMSharesHealth());
-              }}
+              refreshing={ healthLoading }
+              onRefresh={ () => {
+                dispatch( checkMSharesHealth() );
+              } }
             />
           }
         >
-          <View style={{ flexDirection: 'row', marginTop: 10 }}>
-            <View style={{ flex: 2 }}>
-              <Text style={{ ...CommonStyles.headerTitles, marginLeft: 25 }}>
+          <View style={ { flexDirection: 'row', marginTop: 10 } }>
+            <View style={ { flex: 2 } }>
+              <Text style={ { ...CommonStyles.headerTitles, marginLeft: 25 } }>
                 Manage Backup
               </Text>
               <Text
-                style={{ ...CommonStyles.headerTitlesInfoText, marginLeft: 25 }}
+                style={ { ...CommonStyles.headerTitlesInfoText, marginLeft: 25 } }
               >
                 The wallet backup is not secured. Please complete the setup to
                 safeguard against loss of funds
               </Text>
               <KnowMoreButton
-                onpress={() => {
-                  WalletBackupAndRecoveryBottomSheet.current.snapTo(1);
-                }}
-                containerStyle={{ marginTop: 10, marginLeft: 25 }}
-                textStyle={{}}
+                onpress={ () => {
+                  WalletBackupAndRecoveryBottomSheet.current.snapTo( 1 );
+                } }
+                containerStyle={ { marginTop: 10, marginLeft: 25 } }
+                textStyle={ {} }
               />
             </View>
             <View
-              style={{
+              style={ {
                 flex: 1,
                 justifyContent: 'center',
                 alignItems: 'center',
-              }}
+              } }
             >
-              {overallHealth ? (
+              { overallHealth ? (
                 <HomePageShield
-                  circleShadowColor={Colors.borderColor}
-                  shieldImage={require('../../assets/images/icons/protector_gray.png')}
-                  shieldStatus={overallHealth.overallStatus}
+                  circleShadowColor={ Colors.borderColor }
+                  shieldImage={ require( '../../assets/images/icons/protector_gray.png' ) }
+                  shieldStatus={ overallHealth.overallStatus }
                 />
               ) : (
-                <HomePageShield
-                  circleShadowColor={Colors.borderColor}
-                  shieldImage={require('../../assets/images/icons/protector_gray.png')}
-                  shieldStatus={0}
-                />
-              )}
+                  <HomePageShield
+                    circleShadowColor={ Colors.borderColor }
+                    shieldImage={ require( '../../assets/images/icons/protector_gray.png' ) }
+                    shieldStatus={ 0 }
+                  />
+                ) }
             </View>
           </View>
-          {pageData.map((item, index) => {
+          { pageData.map( ( item, index ) => {
             const {
               secondaryDevice,
               trustedContact1,
@@ -2001,25 +2002,25 @@ export default function ManageBackup(props) {
             } = autoHighlightFlags;
             return (
               <View
-                style={{
+                style={ {
                   opacity: !selectedType || item.type == selectedType ? 1 : 0.5,
-                }}
+                } }
               >
                 <TouchableOpacity
-                  onPress={() => {
+                  onPress={ () => {
                     // setSelectedTime(getTime(item.time));
                     // setSelectedStatus(item.status);
-                    if (item.type == 'secondaryDevice') {
-                      props.navigation.navigate('SecondaryDeviceHistory', {
+                    if ( item.type == 'secondaryDevice' ) {
+                      props.navigation.navigate( 'SecondaryDeviceHistory', {
                         selectedStatus: item.status,
-                        selectedTime: getTime(item.time),
+                        selectedTime: getTime( item.time ),
                         selectedTitle: item.title,
                         updateAutoHighlightFlags: () =>
-                          setAutoHighlightFlags({
+                          setAutoHighlightFlags( {
                             ...autoHighlightFlags,
                             secondaryDevice: true,
-                          }),
-                      });
+                          } ),
+                      } );
                       // setTimeout(() => {
                       //   setSelectTypeToReshare('secondaryDevice');
                       // }, 10);
@@ -2028,18 +2029,18 @@ export default function ManageBackup(props) {
                       // } else {
                       //   secondaryDeviceBottomSheet.current.snapTo(1);
                       // }
-                    } else if (item.type == 'contact1') {
-                      props.navigation.navigate('TrustedContactHistory', {
+                    } else if ( item.type == 'contact1' ) {
+                      props.navigation.navigate( 'TrustedContactHistory', {
                         selectedStatus: item.status,
-                        selectedTime: getTime(item.time),
+                        selectedTime: getTime( item.time ),
                         selectedTitle: item.title,
                         updateAutoHighlightFlags: () =>
-                          setAutoHighlightFlags({
+                          setAutoHighlightFlags( {
                             ...autoHighlightFlags,
                             trustedContact1: true,
-                          }),
+                          } ),
                         activateReshare: autoHighlightFlags.trustedContact1,
-                      });
+                      } );
                       // setLoadOnTrustedContactBottomSheet(true);
                       // setTimeout(() => {
                       //   setSelectTypeToReshare('contact1');
@@ -2052,18 +2053,18 @@ export default function ManageBackup(props) {
                       //   setTimeout(() => {
                       //   }, 2);
                       // }
-                    } else if (item.type == 'contact2') {
-                      props.navigation.navigate('TrustedContactHistory', {
+                    } else if ( item.type == 'contact2' ) {
+                      props.navigation.navigate( 'TrustedContactHistory', {
                         selectedStatus: item.status,
-                        selectedTime: getTime(item.time),
+                        selectedTime: getTime( item.time ),
                         selectedTitle: item.title,
                         updateAutoHighlightFlags: () =>
-                          setAutoHighlightFlags({
+                          setAutoHighlightFlags( {
                             ...autoHighlightFlags,
                             trustedContact2: true,
-                          }),
+                          } ),
                         activateReshare: autoHighlightFlags.trustedContact2,
-                      });
+                      } );
                       // setTimeout(() => {
                       //   setSelectTypeToReshare('contact2');
                       // }, 10);
@@ -2076,18 +2077,18 @@ export default function ManageBackup(props) {
                       //   }, 2);
                       //   setLoadOnTrustedContactBottomSheet(true);
                       // }
-                    } else if (item.type === 'copy1') {
-                      props.navigation.navigate('PersonalCopyHistory', {
+                    } else if ( item.type === 'copy1' ) {
+                      props.navigation.navigate( 'PersonalCopyHistory', {
                         selectedStatus: item.status,
-                        selectedTime: getTime(item.time),
+                        selectedTime: getTime( item.time ),
                         selectedTitle: item.title,
                         selectedPersonalCopy: item,
                         updateAutoHighlightFlags: () =>
-                          setAutoHighlightFlags({
+                          setAutoHighlightFlags( {
                             ...autoHighlightFlags,
                             personalCopy1: true,
-                          }),
-                      });
+                          } ),
+                      } );
                       // if (!databaseSSS && !databaseSSS.pdfDetails) {
                       //   Alert.alert(
                       //     'Generating Personal Copy',
@@ -2120,18 +2121,18 @@ export default function ManageBackup(props) {
                       //     }
                       //   },
                       // );
-                    } else if (item.type == 'copy2') {
-                      props.navigation.navigate('PersonalCopyHistory', {
+                    } else if ( item.type == 'copy2' ) {
+                      props.navigation.navigate( 'PersonalCopyHistory', {
                         selectedStatus: item.status,
-                        selectedTime: getTime(item.time),
+                        selectedTime: getTime( item.time ),
                         selectedTitle: item.title,
                         selectedPersonalCopy: item,
                         updateAutoHighlightFlags: () =>
-                          setAutoHighlightFlags({
+                          setAutoHighlightFlags( {
                             ...autoHighlightFlags,
                             personalCopy2: true,
-                          }),
-                      });
+                          } ),
+                      } );
                       // if (!databaseSSS && !databaseSSS.pdfDetails) {
                       //   Alert.alert(
                       //     'Generating Personal Copy',
@@ -2161,17 +2162,17 @@ export default function ManageBackup(props) {
                       //     }
                       //   },
                       // );
-                    } else if (item.type == 'security') {
-                      props.navigation.navigate('SecurityQuestionHistory', {
+                    } else if ( item.type == 'security' ) {
+                      props.navigation.navigate( 'SecurityQuestionHistory', {
                         selectedStatus: item.status,
-                        selectedTime: getTime(item.time),
+                        selectedTime: getTime( item.time ),
                         selectedTitle: item.title,
                         updateAutoHighlightFlags: () =>
-                          setAutoHighlightFlags({
+                          setAutoHighlightFlags( {
                             ...autoHighlightFlags,
                             securityAns: true,
-                          }),
-                      });
+                          } ),
+                      } );
                       // setTimeout(() => {
                       //   setSelectTypeToReshare('security');
                       // }, 2);
@@ -2184,17 +2185,17 @@ export default function ManageBackup(props) {
                     // else {
                     //   secondaryDeviceBottomSheet.current.snapTo(1);
                     // }
-                  }}
-                  style={{
+                  } }
+                  style={ {
                     ...styles.manageBackupCard,
                     borderColor:
                       item.status == 'Ugly'
                         ? Colors.red
                         : item.status == 'Bad'
-                        ? Colors.yellow
-                        : item.status == 'Good'
-                        ? Colors.green
-                        : Colors.blue,
+                          ? Colors.yellow
+                          : item.status == 'Good'
+                            ? Colors.green
+                            : Colors.blue,
                     elevation:
                       selectedType && item.type == selectedType ? 10 : 0,
                     shadowColor:
@@ -2209,37 +2210,37 @@ export default function ManageBackup(props) {
                         : { width: 0, height: 0 },
                     shadowRadius:
                       selectedType && item.type == selectedType ? 10 : 0,
-                  }}
+                  } }
                 >
-                  {getImageIcon(item)}
-                  <View style={{ marginLeft: 15 }}>
-                    <Text style={styles.cardTitleText}>
-                      {item.personalInfo &&
-                      (item.type == 'contact1' || item.type == 'contact2')
+                  { getImageIcon( item ) }
+                  <View style={ { marginLeft: 15 } }>
+                    <Text style={ styles.cardTitleText }>
+                      { item.personalInfo &&
+                        ( item.type == 'contact1' || item.type == 'contact2' )
                         ? item.personalInfo.name
-                        : item.title}
+                        : item.title }
                     </Text>
-                    <Text style={styles.cardTimeText}>
-                      Last backup{' '}
+                    <Text style={ styles.cardTimeText }>
+                      Last backup{ ' ' }
                       <Text
-                        style={{
+                        style={ {
                           fontFamily: Fonts.FiraSansMediumItalic,
                           fontWeight: 'bold',
                           fontStyle: 'italic',
-                        }}
+                        } }
                       >
-                        {getTime(item.time)}
+                        { getTime( item.time ) }
                       </Text>
                     </Text>
                   </View>
                   <Image
-                    style={styles.cardIconImage}
-                    source={getStatusIcon(item)}
+                    style={ styles.cardIconImage }
+                    source={ item.status != "Good" ? getStatusIcon( item ) : require( '../../assets/images/icons/icon_check.png' ) }
                   />
                 </TouchableOpacity>
               </View>
             );
-          })}
+          } ) }
         </ScrollView>
         {/* <BottomSheet
           onCloseStart={() => onPressSecondaryDeviceOk()}
@@ -2250,23 +2251,23 @@ export default function ManageBackup(props) {
           renderHeader={renderSecondaryDeviceHeader}
         /> */}
         <BottomSheet
-          enabledInnerScrolling={true}
-          ref={WalletBackupAndRecoveryBottomSheet}
-          snapPoints={[
+          enabledInnerScrolling={ true }
+          ref={ WalletBackupAndRecoveryBottomSheet }
+          snapPoints={ [
             -50,
             Platform.OS == 'ios' && DeviceInfo.hasNotch()
-              ? hp('90%')
-              : hp('90%'),
-          ]}
-          renderContent={renderWalletBackupAndRecoveryContents}
-          renderHeader={renderWalletBackupAndRecoveryHeader}
+              ? hp( '90%' )
+              : hp( '90%' ),
+          ] }
+          renderContent={ renderWalletBackupAndRecoveryContents }
+          renderHeader={ renderWalletBackupAndRecoveryHeader }
         />
         <BottomSheet
-          enabledInnerScrolling={true}
-          ref={RegenerateShareHelperBottomSheet}
-          snapPoints={[-50, hp('95%')]}
-          renderContent={renderRegenerateShareHelperContents}
-          renderHeader={renderRegenerateShareHelperHeader}
+          enabledInnerScrolling={ true }
+          ref={ RegenerateShareHelperBottomSheet }
+          snapPoints={ [ -50, hp( '95%' ) ] }
+          renderContent={ renderRegenerateShareHelperContents }
+          renderHeader={ renderRegenerateShareHelperHeader }
         />
         {/* <BottomSheet
           enabledInnerScrolling={true}
@@ -2283,11 +2284,11 @@ export default function ManageBackup(props) {
           renderHeader={renderPersonalCopy2ShareModalHeader}
         /> */}
         <BottomSheet
-          enabledInnerScrolling={true}
-          ref={PersonalCopyQRScannerBottomSheet}
-          snapPoints={[-30, hp('90%')]}
-          renderContent={renderPersonalCopyConfirmModalContent}
-          renderHeader={renderPersonalCopyConfirmModalHeader}
+          enabledInnerScrolling={ true }
+          ref={ PersonalCopyQRScannerBottomSheet }
+          snapPoints={ [ -30, hp( '90%' ) ] }
+          renderContent={ renderPersonalCopyConfirmModalContent }
+          renderHeader={ renderPersonalCopyConfirmModalHeader }
         />
         {/* <ModalShareIntent
           removeHighlightingFromCard={removeHighlightingFromCard}
@@ -2350,68 +2351,68 @@ export default function ManageBackup(props) {
           renderHeader={renderHealthCheckSuccessModalHeader}
         /> */}
         <BottomSheet
-          enabledInnerScrolling={true}
-          ref={SecondaryDeviceHistoryBottomSheet}
-          snapPoints={[-30, hp('90%')]}
-          renderContent={renderSecondaryDeviceHistoryContent}
-          renderHeader={renderSecondaryDeviceHistoryHeader}
+          enabledInnerScrolling={ true }
+          ref={ SecondaryDeviceHistoryBottomSheet }
+          snapPoints={ [ -30, hp( '90%' ) ] }
+          renderContent={ renderSecondaryDeviceHistoryContent }
+          renderHeader={ renderSecondaryDeviceHistoryHeader }
         />
         <BottomSheet
-          enabledInnerScrolling={true}
-          ref={PersonalCopyHistoryBottomSheet}
-          snapPoints={[-30, hp('90%')]}
-          renderContent={renderPersonalCopyHistoryContent}
-          renderHeader={renderPersonalCopyHistoryHeader}
+          enabledInnerScrolling={ true }
+          ref={ PersonalCopyHistoryBottomSheet }
+          snapPoints={ [ -30, hp( '90%' ) ] }
+          renderContent={ renderPersonalCopyHistoryContent }
+          renderHeader={ renderPersonalCopyHistoryHeader }
         />
         <BottomSheet
-          enabledInnerScrolling={true}
-          ref={SecurityQuestionHistoryBottomSheet}
-          snapPoints={[-30, hp('90%')]}
-          renderContent={renderSecurityQuestionHistoryContent}
-          renderHeader={renderSecurityQuestionHistoryHeader}
+          enabledInnerScrolling={ true }
+          ref={ SecurityQuestionHistoryBottomSheet }
+          snapPoints={ [ -30, hp( '90%' ) ] }
+          renderContent={ renderSecurityQuestionHistoryContent }
+          renderHeader={ renderSecurityQuestionHistoryHeader }
         />
         <BottomSheet
-          enabledInnerScrolling={true}
-          ref={ChangeBottomSheet}
-          snapPoints={[
+          enabledInnerScrolling={ true }
+          ref={ ChangeBottomSheet }
+          snapPoints={ [
             -50,
             Platform.OS == 'ios' && DeviceInfo.hasNotch()
-              ? hp('37%')
-              : hp('45%'),
-          ]}
-          renderContent={renderChangeContent}
-          renderHeader={renderChangeHeader}
+              ? hp( '37%' )
+              : hp( '45%' ),
+          ] }
+          renderContent={ renderChangeContent }
+          renderHeader={ renderChangeHeader }
         />
         <BottomSheet
-          enabledInnerScrolling={true}
-          ref={ReshareBottomSheet}
-          snapPoints={[
+          enabledInnerScrolling={ true }
+          ref={ ReshareBottomSheet }
+          snapPoints={ [
             -50,
             Platform.OS == 'ios' && DeviceInfo.hasNotch()
-              ? hp('37%')
-              : hp('45%'),
-          ]}
-          renderContent={renderReshareContent}
-          renderHeader={renderReshareHeader}
+              ? hp( '37%' )
+              : hp( '45%' ),
+          ] }
+          renderContent={ renderReshareContent }
+          renderHeader={ renderReshareHeader }
         />
         <BottomSheet
-          enabledInnerScrolling={true}
-          ref={ConfirmBottomSheet}
-          snapPoints={[
+          enabledInnerScrolling={ true }
+          ref={ ConfirmBottomSheet }
+          snapPoints={ [
             -50,
             Platform.OS == 'ios' && DeviceInfo.hasNotch()
-              ? hp('37%')
-              : hp('45%'),
-          ]}
-          renderContent={renderConfirmContent}
-          renderHeader={renderConfirmHeader}
+              ? hp( '37%' )
+              : hp( '45%' ),
+          ] }
+          renderContent={ renderConfirmContent }
+          renderHeader={ renderConfirmHeader }
         />
         <TouchableOpacity
-          disabled={isNextStepDisable}
-          onPress={() => nextStep()}
-          style={{
-            height: wp('10%'),
-            width: wp('30%'),
+          disabled={ isNextStepDisable }
+          onPress={ () => nextStep() }
+          style={ {
+            height: wp( '10%' ),
+            width: wp( '30%' ),
             backgroundColor: Colors.blue,
             justifyContent: 'center',
             alignItems: 'center',
@@ -2421,16 +2422,16 @@ export default function ManageBackup(props) {
             position: 'absolute',
             bottom: 0,
             marginBottom: 20,
-            left: wp('65%'),
+            left: wp( '65%' ),
             marginRight: 20,
-          }}
+          } }
         >
           <Text
-            style={{
+            style={ {
               color: Colors.white,
               fontFamily: Fonts.FiraSansRegular,
-              fontSize: RFValue(12),
-            }}
+              fontSize: RFValue( 12 ),
+            } }
           >
             Next Step
           </Text>
@@ -2440,10 +2441,10 @@ export default function ManageBackup(props) {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create( {
   shieldImage: {
-    width: wp('16%'),
-    height: wp('25%'),
+    width: wp( '16%' ),
+    height: wp( '25%' ),
     resizeMode: 'contain',
     marginLeft: 'auto',
     marginRight: 20,
@@ -2466,13 +2467,13 @@ const styles = StyleSheet.create({
   },
   cardTitleText: {
     color: Colors.blue,
-    fontSize: RFValue(13),
+    fontSize: RFValue( 13 ),
     fontFamily: Fonts.FiraSansRegular,
   },
   cardTimeText: {
     color: Colors.textColorGrey,
     fontFamily: Fonts.FiraSansRegular,
-    fontSize: RFValue(10),
+    fontSize: RFValue( 10 ),
   },
   cardIconImage: {
     width: 12,
@@ -2480,4 +2481,4 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     marginLeft: 'auto',
   },
-});
+} );
